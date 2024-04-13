@@ -1,0 +1,28 @@
+/*!
+ * Simple Menu Order Column
+ *
+ * https://github.com/ChillCode/simple-menu-order-column/
+ *
+ * Copyright (C) 2024 ChillCode
+ *
+ * @license Released under the General Public License v3.0 https://www.gnu.org/licenses/gpl-3.0.html
+ */
+
+table.wp-list-table .column-menu_order {
+    width: 100px;
+    text-align: left !important;
+}
+
+.smoc-input {
+    max-width: 50px;
+}
+
+@keyframes iconrotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}

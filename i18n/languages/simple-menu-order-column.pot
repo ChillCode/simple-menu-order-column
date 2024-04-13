@@ -1,0 +1,41 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Menu Order Column\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-08 01:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.6; wp-6.4.3\n"
+"X-Domain: simple-menu-order-column"
+
+#. Description of the plugin
+msgid "Add a menu order colum to your listings."
+msgstr ""
+
+#. Author of the plugin
+msgid "Chillcode"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/chillcode/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/chillcode/simple-menu-order-column"
+msgstr ""
+
+#: includes/class-simplemenuordercolumn.php:196
+msgid "Order"
+msgstr ""
+
+#. Name of the plugin
+msgid "Simple Menu Order Column"
+msgstr ""
