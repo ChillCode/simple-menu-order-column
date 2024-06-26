@@ -1,0 +1,9 @@
+== Changelog ==
+
+= 1.0.1 2024-06-26 =
+
+**Simple Menu Order Column**
+
+* Add - Added license.txt and LICENSE.md.
+* Update - Remove WC referenes from tags.
+* Update - Add changelog.txt.

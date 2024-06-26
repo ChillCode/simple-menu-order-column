@@ -4,5 +4,5 @@
 
 * [WordPress](https://wordpress.org)
 
-Expose menu order colum on your page listings.
+Show menu order column on your page listings.
 

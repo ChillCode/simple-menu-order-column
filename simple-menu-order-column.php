@@ -10,8 +10,8 @@
  * @wordpress-plugin
  * Plugin Name: Simple Menu Order Column
  * Plugin URI: https://github.com/chillcode/simple-menu-order-column
- * Description: Add a menu order colum to your listings.
- * Version: 1.0.0
+ * Description: Add a menu order column to your listings.
+ * Version: 1.0.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Chillcode
@@ -20,16 +20,13 @@
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: simple-menu-order-column
  * Domain Path: /i18n/languages/
- *
- * WC requires at least: 6.0.1
- * WC tested up to: 8.5.2
  */
 
 defined( 'ABSPATH' ) || exit;
 
 define( 'SMOC_PLUGIN_PATH', __DIR__ );
 define( 'SMOC_PLUGIN_FILE', __FILE__ );
-define( 'SMOC_PLUGIN_VERSION', '1.0.0' );
+define( 'SMOC_PLUGIN_VERSION', '1.0.1' );
 
 require_once SMOC_PLUGIN_PATH . '/includes/class-simplemenuordercolumn.php';
 

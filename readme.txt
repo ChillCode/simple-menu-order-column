@@ -2,15 +2,13 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 6.4
+Tested up to: 6.5.5
 Requires PHP: 7.4
-Stable tag: 1.0.0
-WC requires at least: 6
-WC tested up to: 8
+Stable tag: 1.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Show menu order colum on your dashboard listings.
+Expose menu order column on your dashboard listings.
 
 == Description ==
 
@@ -64,7 +62,7 @@ Once installed you will see an input box on every listing item.
 2. **Navigate to Posts, Media, Pages or Products**: After logging in, navigate to any listing page based on WP_Post, such as Posts, Media, Pages, or Products (if you've installed WooCommerce). You can find these sections in the left-hand menu of the **WordPress** admin dashboard.
 3. **Reordering items**: Each list item will have a new input box with a menu_order value *. Simply change the value and press Enter to reorder the items. Negative values are also acceptable. For example, -1 will be sorted before 1 or 0.
 
-* If Order colum it's not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
+* If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
 == Screenshots ==
 
@@ -87,3 +85,4 @@ Can work with any WP_Post type but may require some additional coding.
 1. Uninstall **Simple Menu Order Column** to erase all data. WP_Post menu_order column will not be modified.
 
 [Manage plugins](https://wordpress.org/documentation/article/manage-plugins/)
+
