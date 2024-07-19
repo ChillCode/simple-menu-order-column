@@ -72,7 +72,7 @@ Once installed you will see an input box on every listing item.
 
 * Add - Added license.txt and LICENSE.md.
 * Fix - Remove WC referenes from tags. [#1](https://github.com/ChillCode/simple-menu-order-column/issues/1)
-* Update - Add changelog.txt.
+* Update - Added changelog.txt.
 
 == Upgrade Notice ==
 
