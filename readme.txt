@@ -2,7 +2,7 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 6.5.5
+Tested up to: 6.6
 Requires PHP: 7.4
 Stable tag: 1.0.1
 License: GPLv3
@@ -63,6 +63,21 @@ Once installed you will see an input box on every listing item.
 3. **Reordering items**: Each list item will have a new input box with a menu_order value *. Simply change the value and press Enter to reorder the items. Negative values are also acceptable. For example, -1 will be sorted before 1 or 0.
 
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
+
+== Changelog ==
+
+= 1.0.1 2024-07-19 =
+
+**Simple Menu Order Column**
+
+* Add - Added license.txt and LICENSE.md.
+* Fix - Remove WC referenes from tags. [#1](https://github.com/ChillCode/simple-menu-order-column/issues/1)
+* Update - Add changelog.txt.
+
+== Upgrade Notice ==
+
+= 1.0.1 =
+Fix false positive with Woo HPOS.
 
 == Screenshots ==
 

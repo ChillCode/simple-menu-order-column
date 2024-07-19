@@ -1,9 +1,9 @@
 == Changelog ==
 
-= 1.0.1 2024-06-26 =
+= 1.0.1 2024-07-19 =
 
 **Simple Menu Order Column**
 
 * Add - Added license.txt and LICENSE.md.
-* Update - Remove WC referenes from tags.
+* Fix - Remove WC referenes from tags. [#1](https://github.com/ChillCode/simple-menu-order-column/issues/1)
 * Update - Add changelog.txt.
