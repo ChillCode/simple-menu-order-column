@@ -8,8 +8,8 @@
  * @license Released under the General Public License v3.0 https://www.gnu.org/licenses/gpl-3.0.html
  */
 (function ($) {
+	const { __, _x, _n, _nx } = wp.i18n;
 	$.fn.smocDoReorder = function (currentObject) {
-
 		const reorderCurrentProduct = this;
 
 		if (!reorderCurrentProduct || $(currentObject).prop('disabled')) {
@@ -30,7 +30,7 @@
 		let reorderPostID = $(reorderCurrentProduct).data('post-id');
 
 		if (!reorderPostID || isNaN(reorderPostID)) {
-			disableInput(null, 'Invalid Post ID.', true);
+			disableInput(null, __( 'The post_id is invalid.', 'simple-menu-order-column' ), true);
 			return false;
 		}
 
@@ -54,7 +54,7 @@
 					id: reorderLoaderID + '-loader',
 					class: 'smoc-loader dashicons dashicons-update',
 					role: 'img',
-					'aria-label': 'Updating Menu Order',
+					'aria-label': __( 'Updating menu order...', 'simple-menu-order-column' ),
 				})
 				.css({
 					color: '#2ea2cc',
@@ -96,7 +96,7 @@
 					id: reorderLoaderID + '-success',
 					class: 'smoc-success dashicons dashicons-yes-alt',
 					role: 'img',
-					'aria-label': 'Success',
+					'aria-label': __( 'The menu order has been updated successfully.', 'simple-menu-order-column' ),
 				})
 				.css({
 					'padding-top': '5px',
@@ -121,7 +121,7 @@
 					id: reorderLoaderID + '-error',
 					class: 'smoc-error dashicons dashicons-dismiss',
 					role: 'img',
-					'aria-label': 'Error',
+					'aria-label':  __( 'An error ocurred while updating menu order.', 'simple-menu-order-column' ),
 				})
 				.css({
 					'padding-top': '5px',
@@ -138,7 +138,7 @@
 		 * Check WP configuration.
 		 */
 		if (!typenow || !ajaxurl) {
-			disableInput(reorderErrorSelector, 'Invalid WP installation, variables typenow or ajaxurl not initialized.', true);
+			disableInput(reorderErrorSelector, __( 'Invalid WP installation, variables typenow or ajaxurl are not initialized.', 'simple-menu-order-column' ), true);
 			return false;
 		}
 
@@ -150,7 +150,7 @@
 		reorderPostMenuOrder = $(reorderCurrentProduct).val();
 
 		if (!reorderPostMenuOrder || isNaN(reorderPostMenuOrder)) {
-			disableInput(reorderErrorSelector, 'Invalid menu order value.', false);
+			disableInput(reorderErrorSelector, __( 'The menu order value is invalid.', 'simple-menu-order-column' ), false);
 			return false;
 		}
 
@@ -162,7 +162,7 @@
 		let postNonce = $(reorderCurrentProduct).data('wpnonce');
 
 		if (!postNonce) {
-			disableInput(reorderErrorSelector, 'Invalid field postNonce.', true);
+			disableInput(reorderErrorSelector, __( 'The postNonce is invalid.', 'simple-menu-order-column' ), true);
 			return false;
 		}
 
@@ -243,7 +243,7 @@
 		}
 
 		if (this.currentValue !== this.value) {
-			if (window.confirm('Do you want to save the menu order?')) {
+			if (window.confirm(__( 'Should the menu order value be updated?', 'simple-menu-order-column' ))) {
 				$(this).smocDoReorder(this);
 			} else {
 				this.value = this.defaultValue;

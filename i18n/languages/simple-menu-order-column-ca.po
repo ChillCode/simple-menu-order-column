@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-08 01:56+0000\n"
-"PO-Revision-Date: 2024-03-08 02:01+0000\n"
+"PO-Revision-Date: 2024-12-15 23:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -12,12 +12,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.4.3\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: simple-menu-order-column"
 
 #. Description of the plugin
-msgid "Add a menu order colum to your listings."
+#| msgid "Add a menu order colum to your listings."
+msgid "Add a menu order column to your listings."
 msgstr "Afegiu una columna d'ordre de menú als vostres llistats."
+
+#: assets/js/simple-menu-order-column.js:130
+msgid "An error ocurred while updating menu order."
+msgstr "S'ha produït un error en actualitzar l'ordre del menú."
 
 #. Author of the plugin
 msgid "Chillcode"
@@ -31,10 +36,42 @@ msgstr "https://github.com/chillcode/"
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr "https://github.com/chillcode/simple-menu-order-column"
 
-#: includes/class-simplemenuordercolumn.php:196
+#: assets/js/simple-menu-order-column.js:147
+msgid ""
+"Invalid WP installation, variables typenow or ajaxurl are not initialized."
+msgstr ""
+"La instal·lació de WP no és vàlida, les variables typenow o ajaxurl no estan "
+"inicialitzades."
+
+#: includes/class-simplemenuordercolumn.php:225
 msgid "Order"
 msgstr "Ordre"
+
+#: assets/js/simple-menu-order-column.js:252
+msgid "Should the menu order value be updated?"
+msgstr "S'ha d'actualitzar el valor de la comanda del menú?"
 
 #. Name of the plugin
 msgid "Simple Menu Order Column"
 msgstr "Simple Menu Order Column"
+
+#: assets/js/simple-menu-order-column.js:105
+msgid "The menu order has been updated successfully."
+msgstr "L'ordre del menú s'ha actualitzat correctament."
+
+#: assets/js/simple-menu-order-column.js:159
+msgid "The menu order value is invalid."
+msgstr "El valor de l'ordre del menú no és vàlid."
+
+#: assets/js/simple-menu-order-column.js:39
+msgid "The post_id is invalid."
+msgstr "El post_id no és vàlid."
+
+#: assets/js/simple-menu-order-column.js:171
+msgid "The postNonce is invalid."
+msgstr "El postNonce no és vàlid."
+
+#: assets/js/simple-menu-order-column.js:63
+#| msgid "Updating Menu Order"
+msgid "Updating menu order..."
+msgstr "Actualitzant l'ordre de menú..."

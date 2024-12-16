@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-08 01:56+0000\n"
+"POT-Creation-Date: 2024-12-15 21:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -17,7 +17,11 @@ msgstr ""
 "X-Domain: simple-menu-order-column"
 
 #. Description of the plugin
-msgid "Add a menu order colum to your listings."
+msgid "Add a menu order column to your listings."
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:130
+msgid "An error ocurred while updating menu order."
 msgstr ""
 
 #. Author of the plugin
@@ -32,10 +36,39 @@ msgstr ""
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:196
+#: assets/js/simple-menu-order-column.js:147
+msgid ""
+"Invalid WP installation, variables typenow or ajaxurl are not initialized."
+msgstr ""
+
+#: includes/class-simplemenuordercolumn.php:225
 msgid "Order"
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:252
+msgid "Should the menu order value be updated?"
 msgstr ""
 
 #. Name of the plugin
 msgid "Simple Menu Order Column"
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:105
+msgid "The menu order has been updated successfully."
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:159
+msgid "The menu order value is invalid."
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:39
+msgid "The post_id is invalid."
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:171
+msgid "The postNonce is invalid."
+msgstr ""
+
+#: assets/js/simple-menu-order-column.js:63
+msgid "Updating menu order..."
 msgstr ""

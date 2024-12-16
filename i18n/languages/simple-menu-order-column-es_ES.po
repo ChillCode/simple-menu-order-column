@@ -3,21 +3,26 @@ msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-08 01:56+0000\n"
-"PO-Revision-Date: 2024-07-19 08:11+0000\n"
+"PO-Revision-Date: 2024-12-15 23:35+0000\n"
 "Last-Translator: \n"
-"Language-Team: Spanish (Spain)\n"
+"Language-Team: Español\n"
 "Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.6\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: simple-menu-order-column"
 
 #. Description of the plugin
-msgid "Add a menu order colum to your listings."
+#| msgid "Add a menu order colum to your listings."
+msgid "Add a menu order column to your listings."
 msgstr "Añade una columna de orden de menú a sus listados."
+
+#: assets/js/simple-menu-order-column.js:130
+msgid "An error ocurred while updating menu order."
+msgstr "Se produjo un error al actualizar el orden de menú."
 
 #. Author of the plugin
 msgid "Chillcode"
@@ -31,10 +36,41 @@ msgstr "https://github.com/chillcode/"
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr "https://github.com/chillcode/simple-menu-order-column"
 
-#: includes/class-simplemenuordercolumn.php:196
+#: assets/js/simple-menu-order-column.js:147
+msgid ""
+"Invalid WP installation, variables typenow or ajaxurl are not initialized."
+msgstr ""
+"Instalación de WordPress no válida, las variables typenow o ajaxurl no están "
+"inicializadas."
+
+#: includes/class-simplemenuordercolumn.php:225
 msgid "Order"
 msgstr "Orden"
+
+#: assets/js/simple-menu-order-column.js:252
+msgid "Should the menu order value be updated?"
+msgstr "¿Se debe actualizar el valor del orden de menú?"
 
 #. Name of the plugin
 msgid "Simple Menu Order Column"
 msgstr "Simple Menu Order Column"
+
+#: assets/js/simple-menu-order-column.js:105
+msgid "The menu order has been updated successfully."
+msgstr "El orden de menú se actualizó correctamente."
+
+#: assets/js/simple-menu-order-column.js:159
+msgid "The menu order value is invalid."
+msgstr "El valor de orden de menú no es válido."
+
+#: assets/js/simple-menu-order-column.js:39
+msgid "The post_id is invalid."
+msgstr "El identificador de publicación no es válido."
+
+#: assets/js/simple-menu-order-column.js:171
+msgid "The postNonce is invalid."
+msgstr "El identificador único no es vñaido"
+
+#: assets/js/simple-menu-order-column.js:63
+msgid "Updating menu order..."
+msgstr "Actualizando el orden de menú..."

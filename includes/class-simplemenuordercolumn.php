@@ -114,8 +114,10 @@ final class SimpleMenuOrderColumn {
 	public function admin_enqueue_scripts() {
 		$wp_scripts_get_suffix = wp_scripts_get_suffix();
 
-		wp_enqueue_script( 'simple-menu-order-column', plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ), array( 'jquery' ), SMOC_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'simple-menu-order-column', plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ), array( 'jquery', 'wp-i18n' ), SMOC_PLUGIN_VERSION, true );
 		wp_enqueue_style( 'simple-menu-order-column', plugins_url( 'assets/css/simple-menu-order-column' . $wp_scripts_get_suffix . '.css', SMOC_PLUGIN_FILE ), array(), SMOC_PLUGIN_VERSION );
+
+		wp_set_script_translations( 'simple-menu-order-column', 'simple-menu-order-column', plugin_dir_path( SMOC_PLUGIN_FILE ) . '/i18n/languages/' );
 	}
 
 	/**
