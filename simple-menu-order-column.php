@@ -11,7 +11,7 @@
  * Plugin Name: Simple Menu Order Column
  * Plugin URI: https://github.com/chillcode/simple-menu-order-column
  * Description: Add a menu order column to your listings.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Chillcode
@@ -26,24 +26,26 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'SMOC_PLUGIN_PATH', __DIR__ );
 define( 'SMOC_PLUGIN_FILE', __FILE__ );
-define( 'SMOC_PLUGIN_VERSION', '1.0.1' );
+define( 'SMOC_PLUGIN_VERSION', '1.0.2' );
 
 require_once SMOC_PLUGIN_PATH . '/includes/class-simplemenuordercolumn.php';
 
-/**
- * Main Instance.
- *
- * Ensures only one instance is loaded or can be loaded.
- *
- * @since 1.0
- * @static
- * @return SMOC\SimpleMenuOrderColumn Main instance.
- */
-function SMOC(): SMOC\SimpleMenuOrderColumn { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	return SMOC\SimpleMenuOrderColumn::instance();
-}
+if ( class_exists( 'SMOC\SimpleMenuOrderColumn' ) ) {
+	/**
+	 * Main Instance.
+	 *
+	 * Ensures only one instance is loaded or can be loaded.
+	 *
+	 * @since 1.0
+	 * @static
+	 * @return SMOC\SimpleMenuOrderColumn Main instance.
+	 */
+	function SMOC(): SMOC\SimpleMenuOrderColumn { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+		return SMOC\SimpleMenuOrderColumn::instance();
+	}
 
-/**
- * Initialize the plugin.
- */
-SMOC();
+	/**
+	 * Initialize the plugin.
+	 */
+	SMOC();
+}

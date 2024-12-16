@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 1.0.2 2024-12-16 =
+
+* Update - Minor code changes.
+* Fix - Localize Javascript.
+* Add - Added products listing screenshot.
+
 = 1.0.1 2024-07-19 =
 
 **Simple Menu Order Column**

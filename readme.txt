@@ -2,9 +2,9 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,11 +79,16 @@ Once installed you will see an input box on every listing item.
 = 1.0.1 =
 Fix false positive with Woo HPOS.
 
+= 1.0.2 =
+Minor code changes.
+Localize Javascript.
+
 == Screenshots ==
 
-1. Order Posts.
-2. Order Media.
-3. Order Products.
+1. Posts.
+2. Pages.
+3. Media.
+4. Products.
 
 == Frequently Asked Questions ==
 
