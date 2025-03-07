@@ -66,13 +66,11 @@ Once installed you will see an input box on every listing item.
 
 == Changelog ==
 
-= 1.0.1 2024-07-19 =
+= 1.0.2 2024-12-16 =
 
-**Simple Menu Order Column**
-
-* Add - Added license.txt and LICENSE.md.
-* Fix - Remove WC referenes from tags. [#1](https://github.com/ChillCode/simple-menu-order-column/issues/1)
-* Update - Added changelog.txt.
+* Update - Minor code changes.
+* Fix - Localize Javascript.
+* Add - Added products listing screenshot.
 
 == Upgrade Notice ==
 
