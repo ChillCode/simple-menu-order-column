@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'SMOC_PLUGIN_PATH', __DIR__ );
 define( 'SMOC_PLUGIN_FILE', __FILE__ );
-define( 'SMOC_PLUGIN_VERSION', '1.0.2' );
+define( 'SMOC_PLUGIN_VERSION', '2.0.0' );
 
 require_once SMOC_PLUGIN_PATH . '/includes/class-simplemenuordercolumn.php';
 
