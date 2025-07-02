@@ -4,7 +4,7 @@
  *
  * @package SimpleMenuOrderColumn
  *
- * Copyright: (c) 2003-2022 Chillcode
+ * Copyright: (c) 2003-2025 Chillcode
  */
 
 namespace SMOC;
@@ -21,7 +21,7 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var SimpleMenuOrderColumn
+	 * @var SimpleMenuOrderColumn|null
 	 */
 	private static $smoc_instace;
 
@@ -30,7 +30,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * We allow all WP_Post since has menu_order column and are sortable.
 	 *
-	 * @var array
+	 * @var array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
 	 */
 	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment' );
 
@@ -88,6 +88,10 @@ final class SimpleMenuOrderColumn {
 		/** Add only on listings pages and compatible post types. */
 		$current_screen = get_current_screen();
 
+		if ( null === $current_screen ) {
+			return;
+		}
+
 		if (
 			! in_array( $current_screen->base, array( 'edit', 'upload' ), true ) ||
 			! in_array( $current_screen->post_type, self::$smoc_allowed_types, true )
@@ -99,8 +103,8 @@ final class SimpleMenuOrderColumn {
 		add_filter( 'manage_' . $current_screen->id . '_sortable_columns', array( __CLASS__, 'manage_edit_sortable_columns' ) );
 
 		if ( 'upload' === $current_screen->base ) {
-			/** This filter is called directly. */
-			add_filter( 'manage_media_custom_column', array( __CLASS__, 'manage_posts_custom_column' ), 10, 2 );
+			/** This action is called directly. */
+			add_action( 'manage_media_custom_column', array( __CLASS__, 'manage_posts_custom_column' ), 10, 2 );
 		} else {
 			add_action( 'manage_' . $current_screen->post_type . '_posts_custom_column', array( __CLASS__, 'manage_posts_custom_column' ), 10, 2 );
 		}
@@ -110,11 +114,13 @@ final class SimpleMenuOrderColumn {
 
 	/**
 	 * Enqueue scripts.
+	 *
+	 * @return void
 	 */
 	public function admin_enqueue_scripts() {
 		$wp_scripts_get_suffix = wp_scripts_get_suffix();
 
-		wp_enqueue_script( 'simple-menu-order-column', plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ), array( 'jquery', 'wp-i18n' ), SMOC_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'simple-menu-order-column', plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ), array( 'wp-i18n' ), SMOC_PLUGIN_VERSION, true );
 		wp_enqueue_style( 'simple-menu-order-column', plugins_url( 'assets/css/simple-menu-order-column' . $wp_scripts_get_suffix . '.css', SMOC_PLUGIN_FILE ), array(), SMOC_PLUGIN_VERSION );
 
 		wp_set_script_translations( 'simple-menu-order-column', 'simple-menu-order-column', plugin_dir_path( SMOC_PLUGIN_FILE ) . '/i18n/languages/' );
@@ -123,7 +129,7 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Allowed post_types.
 	 *
-	 * @return array
+	 * @return array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
 	 */
 	public static function get_allowed_types() {
 		return self::$smoc_allowed_types;
@@ -171,18 +177,16 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @param int $post_id Post id.
 	 * @param int $post_menu_order Post order.
+	 * @return WP_Error|int The post ID on success. The value 0 or WP_Error on failure.
 	 */
 	private static function set_post_menu_order( int $post_id, int $post_menu_order ) {
-
-		$post = get_post( $post_id );
-
-		if ( ! $post ) {
-			return new WP_Error();
-		}
-
-		$post->menu_order = $post_menu_order;
-
-		return wp_update_post( $post, true );
+		return wp_update_post(
+			array(
+				'ID'         => $post_id,
+				'menu_order' => $post_menu_order,
+			),
+			true
+		);
 	}
 
 	/**
@@ -190,6 +194,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @param int $post_id Post id.
 	 * @param int $post_menu_order Post order.
+	 * @return void
 	 */
 	private static function output_menu_order_column( int $post_id, int $post_menu_order ) {
 		/**
@@ -206,10 +211,15 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @param string $column Column name.
 	 * @param int    $postid Post order.
+	 * @return void
 	 */
 	public static function manage_posts_custom_column( $column, $postid ) {
 		if ( 'menu_order' === $column ) {
 			$post = get_post( $postid );
+
+			if ( null === $post ) {
+				return;
+			}
 
 			self::output_menu_order_column( $postid, $post->menu_order );
 		}
@@ -218,20 +228,19 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Add menu order column.
 	 *
-	 * @param array $columns Post list columns.
-	 * @return array
+	 * @param string[] $columns Post list columns.
+	 * @return string[]
 	 */
 	public static function manage_edit_columns( $columns ) {
 		$columns['menu_order'] = esc_html__( 'Order', 'simple-menu-order-column' );
-
 		return $columns;
 	}
 
 	/**
 	 * Add menu order column to sortable columns.
 	 *
-	 * @param array $sortable_columns Post list columns.
-	 * @return array
+	 * @param string[] $sortable_columns Post list columns.
+	 * @return string[]
 	 */
 	public static function manage_edit_sortable_columns( $sortable_columns ) {
 		$sortable_columns['menu_order'] = 'menu_order';
@@ -244,7 +253,7 @@ final class SimpleMenuOrderColumn {
 	 * @return SimpleMenuOrderColumn
 	 */
 	public static function instance() {
-		if ( is_null( self::$smoc_instace ) ) {
+		if ( ! self::$smoc_instace instanceof SimpleMenuOrderColumn ) {
 			self::$smoc_instace = new self();
 		}
 

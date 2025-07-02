@@ -2,9 +2,9 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 2.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -66,7 +66,7 @@ Once installed you will see an input box on every listing item.
 
 == Changelog ==
 
-= 1.0.2 2024-12-16 =
+= 2.0.0 2025-07-02 =
 
 * Update - Minor code changes.
 * Fix - Localize Javascript.
@@ -80,6 +80,11 @@ Fix false positive with Woo HPOS.
 = 1.0.2 =
 Minor code changes.
 Localize Javascript.
+
+= 2.0.0 =
+Vanilla Javascript, no jQuery.
+Minor PHPDoc fixes.
+Minor code fixes.
 
 == Screenshots ==
 

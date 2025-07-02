@@ -1,261 +1,230 @@
 /*!
- * Simple Menu Order Column
+ * Simple Menu Order Column - Vanilla JS Version
  *
  * https://github.com/ChillCode/simple-menu-order-column/
  *
- * Copyright (C) 2024 ChillCode
+ * Copyright (C) 2003-2025 ChillCode
  *
  * @license Released under the General Public License v3.0 https://www.gnu.org/licenses/gpl-3.0.html
  */
-(function ($) {
-	const { __, _x, _n, _nx } = wp.i18n;
-	$.fn.smocDoReorder = function (currentObject) {
-		const reorderCurrentProduct = this;
+(function () {
 
-		if (!reorderCurrentProduct || $(currentObject).prop('disabled')) {
-			return false;
-		}
+    const { __ } = wp.i18n;
 
-		function disableInput(errorContainer, errorMessage, disable) {
-			/** Reset input value. */
-			currentObject.value = currentObject.defaultValue;
-			/** Show error icon. */
-			errorContainer && errorContainer.css('display', 'inline-block');
-			/** Disable input field. */
-			$(currentObject).prop('disabled', disable).prop('title', errorMessage);
-			/** Output message to widow console. */
-			window.console.warn('[Simple Menu Order Column] ' + errorMessage);
-		};
+    function smocInit() {
+        document.removeEventListener("DOMContentLoaded", smocInit);
+        window.removeEventListener("load", smocInit);
 
-		let reorderPostID = $(reorderCurrentProduct).data('post-id');
+        const smocInputs = document.querySelectorAll('input[id^=smoc]');
 
-		if (!reorderPostID || isNaN(reorderPostID)) {
-			disableInput(null, __( 'The post_id is invalid.', 'simple-menu-order-column' ), true);
-			return false;
-		}
+        smocInputs.forEach(smocInput => {
+            smocInput.addEventListener('focus', () => {
+                smocInput.currentValue = smocInput.value;
+                smocInput.title = parseInt(smocInput.value);
 
-		reorderPostID = parseInt(reorderPostID);
+                const { postId } = smocInput.dataset;
+                if (!postId) { return; };
 
-		/**
-		 * Create loader and result containers.
-		 */
-		const reorderLoaderID = 'smoc-' + reorderPostID.toString();
+                const hideElement = id => {
+                    const smocElement = document.getElementById(id);
+                    if (smocElement) { smocElement.style.display = 'none'; }
+                };
 
-		const reorderResultContainer = $(reorderCurrentProduct).closest('.smoc-container');
+                const smocBaseId = `smoc-${postId}`;
 
-		/**
-		 * Create loader.
-		 */
-		let reorderLoaderSelector = $('#' + reorderLoaderID + '-loader');
+                hideElement(`${smocBaseId}-loader-container`);
+                hideElement(`${smocBaseId}-success`);
+                hideElement(`${smocBaseId}-error`);
+            });
 
-		if (!reorderLoaderSelector.length) {
-			reorderLoaderSelector = $('<span>')
-				.attr({
-					id: reorderLoaderID + '-loader',
-					class: 'smoc-loader dashicons dashicons-update',
-					role: 'img',
-					'aria-label': __( 'Updating menu order...', 'simple-menu-order-column' ),
-				})
-				.css({
-					color: '#2ea2cc',
-					animation: 'iconrotation 2s infinite linear',
-					display: 'inline-block',
-				});
-		}
+            smocInput.addEventListener('focusout', () => {
+                if (smocInput.disabled) { return; };
 
-		let reorderLoaderSelectorContainer = $(
-			'#' + reorderLoaderID + '-loader-container'
-		);
+                if (smocInput.currentValue !== smocInput.value) {
+                    if (window.confirm(__('Should the menu order value be updated?', 'simple-menu-order-column'))) {
+                        smocDoReorder(smocInput);
+                    } else {
+                        smocInput.value = smocInput.defaultValue;
+                    }
+                }
+            });
 
-		if (!reorderLoaderSelectorContainer.length) {
-			reorderLoaderSelectorContainer = $('<div>')
-				.attr({
-					id: reorderLoaderID + '-loader-container',
-				})
-				.css({
-					'padding-top': '5px',
-					display: 'none',
-				});
+            smocInput.addEventListener('keydown', (smocKeydownEvent) => {
+                const allowedKeys = [
+                    'Backspace', 'Tab', 'ArrowLeft', 'ArrowRight',
+                    'ArrowUp', 'ArrowDown', 'Delete', 'Home', 'End', 'Enter'
+                ];
 
-			reorderLoaderSelectorContainer.append(reorderLoaderSelector);
+                // Allow: Ctrl/Cmd + A/C/V/X
+                if ((smocKeydownEvent.ctrlKey || smocKeydownEvent.metaKey) && ['a', 'c', 'v', 'x'].includes(smocKeydownEvent.key.toLowerCase())) { return; }
 
-			reorderResultContainer.append(reorderLoaderSelectorContainer);
-		} else {
-			reorderLoaderSelectorContainer.css({ display: 'none' });
-		}
+                // Allow navigation/edit keys
+                if (allowedKeys.includes(smocKeydownEvent.key)) { return; }
 
-		/**
-		 * Create Success result.
-		 */
+                // Block any key that is not a digit (0-9)
+                if (!/^\d$/.test(smocKeydownEvent.key)) {
+                    smocKeydownEvent.preventDefault();
+                }
+            });
 
-		let reorderSuccessSelector = $('#' + reorderLoaderID + '-success');
+            smocInput.addEventListener('paste', (smocPasteEvent) => {
+                const pasted = smocPasteEvent.clipboardData.getData('text');
+                if (!/^\d+$/.test(pasted)) {
+                    smocPasteEvent.preventDefault();
+                }
+            });
 
-		if (!reorderSuccessSelector.length) {
-			reorderSuccessSelector = $('<span>')
-				.attr({
-					id: reorderLoaderID + '-success',
-					class: 'smoc-success dashicons dashicons-yes-alt',
-					role: 'img',
-					'aria-label': __( 'The menu order has been updated successfully.', 'simple-menu-order-column' ),
-				})
-				.css({
-					'padding-top': '5px',
-					color: '#7ad03a',
-					display: 'none',
-				});
+            smocInput.addEventListener('keypress', smocKeypressEvent => {
+                if (smocKeypressEvent.key === 'Enter') {
+                    smocKeypressEvent.preventDefault();
+                    smocDoReorder(smocInput);
+                }
+            });
+        });
+    }
 
-			reorderResultContainer.append(reorderSuccessSelector);
-		} else {
-			reorderSuccessSelector.css({ display: 'none' });
-		}
+    function smocDoReorder(smocInput) {
+        if (!smocInput || smocInput.disabled) { return; }
 
-		/**
-		 * Create Error result.
-		 */
+        const smocContainer = smocInput.closest('.smoc-container'), postId = parseInt(smocInput.dataset.postId);
 
-		let reorderErrorSelector = $('#' + reorderLoaderID + '-error');
+        if (!postId || isNaN(postId)) {
+            disableInput(null, __('The post_id is invalid.', 'simple-menu-order-column'), true, smocInput);
+            return;
+        }
 
-		if (!reorderErrorSelector.length) {
-			reorderErrorSelector = $('<span>')
-				.attr({
-					id: reorderLoaderID + '-error',
-					class: 'smoc-error dashicons dashicons-dismiss',
-					role: 'img',
-					'aria-label':  __( 'An error ocurred while updating menu order.', 'simple-menu-order-column' ),
-				})
-				.css({
-					'padding-top': '5px',
-					color: '#a00',
-					display: 'none',
-				});
+        const loaderId = `smoc-${postId}`, menuOrder = parseInt(smocInput.value);
 
-			reorderResultContainer.append(reorderErrorSelector);
-		} else {
-			reorderErrorSelector.css({ display: 'none' });
-		}
+        if (isNaN(menuOrder)) {
+            const errorEl = document.getElementById(`${loaderId}-error`);
+            disableInput(errorEl, __('The menu order value is invalid.', 'simple-menu-order-column'), false, smocInput);
+            return;
+        }
 
-		/**
-		 * Check WP configuration.
-		 */
-		if (!typenow || !ajaxurl) {
-			disableInput(reorderErrorSelector, __( 'Invalid WP installation, variables typenow or ajaxurl are not initialized.', 'simple-menu-order-column' ), true);
-			return false;
-		}
+        const nonce = smocInput.dataset.wpnonce;
+        if (!nonce) {
+            const errorEl = document.getElementById(`${loaderId}-error`);
+            disableInput(errorEl, __('The postNonce is invalid.', 'simple-menu-order-column'), true, smocInput);
+            return;
+        }
 
-		let reorderPostMenuOrder = $(reorderCurrentProduct).val();
+        if (typeof ajaxurl === 'undefined' || typeof typenow === 'undefined') {
+            const errorEl = document.getElementById(`${loaderId}-error`);
+            disableInput(errorEl, __('Invalid WP installation, variables typenow or ajaxurl are not initialized.', 'simple-menu-order-column'), true, smocInput);
+            return;
+        }
 
-		/**
-		 * Populate and validate Product Order
-		 */
-		reorderPostMenuOrder = $(reorderCurrentProduct).val();
+        smocInput.disabled = true;
 
-		if (!reorderPostMenuOrder || isNaN(reorderPostMenuOrder)) {
-			disableInput(reorderErrorSelector, __( 'The menu order value is invalid.', 'simple-menu-order-column' ), false);
-			return false;
-		}
+        const showLoader = () => {
+            let smocLoaderContainer = document.getElementById(`${loaderId}-loader-container`);
+            if (!smocLoaderContainer) {
+                const smocLoader = document.createElement('span');
+                smocLoader.id = `${loaderId}-loader`;
+                smocLoader.className = 'smoc-loader dashicons dashicons-update';
+                smocLoader.setAttribute('role', 'img');
+                smocLoader.setAttribute('aria-label', __('Updating menu order...', 'simple-menu-order-column'));
+                smocLoader.style.cssText = 'color: #2ea2cc; animation: iconrotation 2s infinite linear; display: inline-block;';
 
-		reorderPostMenuOrder = parseInt(reorderPostMenuOrder);
+                smocLoaderContainer = document.createElement('div');
+                smocLoaderContainer.id = `${loaderId}-loader-container`;
+                smocLoaderContainer.style.cssText = 'padding-top: 5px; display: inline-block;';
+                smocLoaderContainer.appendChild(smocLoader);
+                smocContainer.appendChild(smocLoaderContainer);
+            } else {
+                smocLoaderContainer.style.display = 'inline-block';
+            }
+        };
 
-		/**
-		 * Populate wpnonce
-		 */
-		let postNonce = $(reorderCurrentProduct).data('wpnonce');
+        const showSuccess = () => {
+            let smocSuccess = document.getElementById(`${loaderId}-success`);
+            if (!smocSuccess) {
+                smocSuccess = document.createElement('span');
+                smocSuccess.id = `${loaderId}-success`;
+                smocSuccess.className = 'smoc-success dashicons dashicons-yes-alt';
+                smocSuccess.setAttribute('role', 'img');
+                smocSuccess.setAttribute('aria-label', __('The menu order has been updated successfully.', 'simple-menu-order-column'));
+                smocSuccess.style.cssText = 'padding-top: 5px; color: #7ad03a; display: inline-block;';
+                smocContainer.appendChild(smocSuccess);
+            } else {
+                smocSuccess.style.display = 'inline-block';
+            }
+        };
 
-		if (!postNonce) {
-			disableInput(reorderErrorSelector, __( 'The postNonce is invalid.', 'simple-menu-order-column' ), true);
-			return false;
-		}
+        const showError = () => {
+            let smocError = document.getElementById(`${loaderId}-error`);
+            if (!smocError) {
+                smocError = document.createElement('span');
+                smocError.id = `${loaderId}-error`;
+                smocError.className = 'smoc-error dashicons dashicons-dismiss';
+                smocError.setAttribute('role', 'img');
+                smocError.setAttribute('aria-label', __('An error ocurred while updating menu order.', 'simple-menu-order-column'));
+                smocError.style.cssText = 'padding-top: 5px; color: #a00; display: inline-block;';
+                smocContainer.appendChild(smocError);
+            } else {
+                smocError.style.display = 'inline-block';
+            }
+        };
 
-		/**
-		 * Disable INPUT while doing ajax
-		 */
-		$(currentObject).prop('disabled', true);
+        const hideLoader = () => {
+            const smocLoaderContainer = document.getElementById(`${loaderId}-loader-container`);
+            if (smocLoaderContainer) { smocLoaderContainer.style.display = 'none'; }
+        };
 
-		reorderLoaderSelectorContainer.css({ display: 'inline-block' });
+        showLoader();
 
-		/**
-		 * Format POST URL.
-		 */
-		const searchParams = new URLSearchParams();
+        fetch(`${ajaxurl}?action=smoc_reorder&_wpnonce=${encodeURIComponent(nonce)}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                post_type: typenow,
+                post_id: postId,
+                post_menu_order: menuOrder,
+            }),
+        })
+            .then(res => res.json())
+            .then(response => {
+                if (response.success) {
+                    showSuccess();
+                    smocInput.title = menuOrder;
+                    smocInput.currentValue = menuOrder;
+                    smocInput.defaultValue = menuOrder;
 
-		searchParams.set('action', 'smoc_reorder');
-		searchParams.set('_wpnonce', postNonce);
+                    const inputs = Array.from(document.querySelectorAll('input[id^=smoc]')), pos = inputs.indexOf(smocInput) + 1;
+                    if (inputs[pos]) { inputs[pos].select(); }
+                } else {
+                    smocInput.value = smocInput.defaultValue;
+                    showError();
+                }
+            })
+            .catch(() => {
+                smocInput.value = smocInput.defaultValue;
+                hideLoader();
+                showError();
+            })
+            .finally(() => {
+                hideLoader();
+                smocInput.disabled = false;
+            });
+    }
 
-		const request = jQuery.ajax({
-			url: ajaxurl + '?' + searchParams,
-			type: 'POST',
-			data: {
-				post_type: typenow,
-				post_id: reorderPostID,
-				post_menu_order: reorderPostMenuOrder,
-			},
-		});
+    function disableInput(errorContainer, message, disable, input) {
+        input.value = input.defaultValue;
+        if (errorContainer) { errorContainer.style.display = 'inline-block'; }
+        input.disabled = disable;
+        input.title = message;
+        console.warn(`[Simple Menu Order Column] ${message}`);
+    }
 
-		request.done(function (response) {
-			if (response.success) {
-				reorderSuccessSelector.css('display', 'inline-block');
-
-				$(currentObject).prop('title', reorderPostMenuOrder);
-
-				currentObject.currentValue = reorderPostMenuOrder;
-				currentObject.defaultValue = reorderPostMenuOrder;
-				// If success go to next product.
-				const currentObjectPosition = $(':input[id^=smoc]').index(currentObject);
-				$(':input[id^=smoc]').eq(currentObjectPosition + 1).trigger('select');
-			} else {
-				currentObject.value = currentObject.defaultValue;
-
-				reorderErrorSelector.css('display', 'inline-block');
-			}
-		});
-
-		request.fail(function () {
-			currentObject.value = currentObject.defaultValue;
-
-			reorderLoaderSelectorContainer.css('display', 'none');
-			reorderSuccessSelector.css('display', 'none');
-			reorderErrorSelector.css('display', 'inline-block');
-		});
-
-		request.always(function () {
-			reorderLoaderSelectorContainer.css({ display: 'none' });
-
-			/** Enable INPUT after doing Ajax */
-			$(currentObject).prop('disabled', false);
-		});
-	};
-
-	$('input[id^=smoc]').on('focus', function () {
-		this.currentValue = this.value;
-
-		$(this).prop('title', parseInt(this.value));
-
-		const reorderLoaderID = 'smoc-' + $(this).data('post-id').toString();
-
-		$('#' + reorderLoaderID + '-loader-container').css({ display: 'none' });
-		$('#' + reorderLoaderID + '-success').css({ display: 'none' });
-		$('#' + reorderLoaderID + '-error').css({ display: 'none' });
-	});
-
-	$('input[id^=smoc]').on('focusout', function (e) {
-		if ($(this).prop('disabled')) {
-			return false;
-		}
-
-		if (this.currentValue !== this.value) {
-			if (window.confirm(__( 'Should the menu order value be updated?', 'simple-menu-order-column' ))) {
-				$(this).smocDoReorder(this);
-			} else {
-				this.value = this.defaultValue;
-			}
-		}
-	});
-
-	$('input[id^=smoc]').on('keypress', function (e) {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-
-			$(this).smocDoReorder(this);
-		}
-	});
-})(jQuery);
+    /**
+     * Initilize Script
+     */
+    if (document.readyState === "loading") {
+        document.addEventListener('DOMContentLoaded', smocInit);
+        window.addEventListener("load", smocInit);
+    } else {
+        window.setTimeout(smocInit);
+    }
+})();

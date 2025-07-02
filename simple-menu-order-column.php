@@ -11,7 +11,7 @@
  * Plugin Name: Simple Menu Order Column
  * Plugin URI: https://github.com/chillcode/simple-menu-order-column
  * Description: Add a menu order column to your listings.
- * Version: 1.0.2
+ * Version: 2.0.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Chillcode
