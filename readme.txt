@@ -4,7 +4,7 @@ Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -66,11 +66,9 @@ Once installed you will see an input box on every listing item.
 
 == Changelog ==
 
-= 2.0.0 2025-07-02 =
+= 2.0.1 2025-12-01 =
 
-* Vanilla Javascript, no jQuery.
-* Minor PHPDoc fixes.
-* Minor code fixes.
+* Allow negative values
 
 == Upgrade Notice ==
 
