@@ -177,7 +177,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @param int $post_id Post id.
 	 * @param int $post_menu_order Post order.
-	 * @return WP_Error|int The post ID on success. The value 0 or WP_Error on failure.
+	 * @return WP_Error|int The post ID on success or WP_Error on failure.
 	 */
 	private static function set_post_menu_order( int $post_id, int $post_menu_order ) {
 		return wp_update_post(

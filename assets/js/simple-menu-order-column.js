@@ -52,7 +52,7 @@
             smocInput.addEventListener('keydown', (smocKeydownEvent) => {
                 const allowedKeys = [
                     'Backspace', 'Tab', 'ArrowLeft', 'ArrowRight',
-                    'ArrowUp', 'ArrowDown', 'Delete', 'Home', 'End', 'Enter'
+                    'ArrowUp', 'ArrowDown', 'Delete', 'Home', 'End', 'Enter', 'Subtract', '-'
                 ];
 
                 // Allow: Ctrl/Cmd + A/C/V/X

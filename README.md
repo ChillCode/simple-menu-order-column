@@ -58,11 +58,11 @@ Once installed you will see an input box on every listing item.
 
 ## Changelog
 
-### 1.0.2 2024-12-16
+### 2.0.0 2025-07-02
 
-* Update - Minor code changes.
-* Fix - Localize Javascript.
-* Add - Added products listing screenshot.
+* Vanilla Javascript, no jQuery.
+* Minor PHPDoc fixes.
+* Minor code fixes.
 
 ## Upgrade Notice
 
