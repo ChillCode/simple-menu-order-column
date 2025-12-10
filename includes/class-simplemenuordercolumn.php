@@ -34,6 +34,9 @@ final class SimpleMenuOrderColumn {
 	 */
 	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment' );
 
+	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';
+	public const SMOC_OPTION_UI_TAB_TO_NEXT = 'smoc_ui_tab_to_next';
+
 	/**
 	 * Construtor.
 	 */
@@ -77,6 +80,107 @@ final class SimpleMenuOrderColumn {
 		if ( function_exists( 'load_plugin_textdomain' ) ) {
 			load_plugin_textdomain( 'simple-menu-order-column', false, dirname( plugin_basename( SMOC_PLUGIN_FILE ) ) . '/i18n/languages/' );
 		}
+
+		add_action( 'admin_init', array( $this, 'add_setting' ) );
+	}
+
+	/**
+	 * Add setting to wriring dashboard to disable UI confirmation.
+	 *
+	 * @return void
+	 */
+	public function add_setting() {
+
+		add_settings_section(
+			'smoc_section',
+			'Simple Menu Order Column',
+			array( __CLASS__, 'output_section_description' ),
+			'writing'
+		);
+
+		register_setting(
+			'writing',
+			self::SMOC_OPTION_UI_CONFIRM,
+			array(
+				'type'              => 'boolean',
+				'sanitize_callback' => array( __CLASS__, 'input_sanitize_checkbox' ),
+				'default'           => true,
+			)
+		);
+
+		add_settings_field(
+			self::SMOC_OPTION_UI_CONFIRM,
+			__( 'Show confirmation prompt', 'simple-menu-order-column' ),
+			array( __CLASS__, 'output_admin_setting' ),
+			'writing',
+			'smoc_section',
+			array(
+				'option_name' => self::SMOC_OPTION_UI_CONFIRM,
+				'option_desc' => esc_attr__( 'If disabled, the value will be updated automatically without prompting.', 'simple-menu-order-column' ),
+			)
+		);
+
+		register_setting(
+			'writing',
+			self::SMOC_OPTION_UI_TAB_TO_NEXT,
+			array(
+				'type'              => 'boolean',
+				'sanitize_callback' => array( __CLASS__, 'input_sanitize_checkbox' ),
+				'default'           => true,
+			)
+		);
+
+		add_settings_field(
+			self::SMOC_OPTION_UI_TAB_TO_NEXT,
+			__( 'Go to next field on update', 'simple-menu-order-column' ),
+			array( __CLASS__, 'output_admin_setting' ),
+			'writing',
+			'smoc_section',
+			array(
+				'option_name' => self::SMOC_OPTION_UI_TAB_TO_NEXT,
+				'option_desc' => esc_attr__( 'If disabled, the cursor will remain in the input field after menu order is updated.', 'simple-menu-order-column' ),
+			)
+		);
+	}
+
+	/**
+	 * Sanitize checkbox value.
+	 *
+	 * @param mixed $value Value to sanitize.
+	 *
+	 * @return int
+	 */
+	public static function input_sanitize_checkbox( $value ) {
+
+		return $value ? 1 : 0;
+	}
+
+	/**
+	 * Generate html checkbox to disable UI confirmation section
+	 *
+	 * @return void
+	 */
+	public static function output_section_description() {
+		echo '<p>' . esc_html__(
+			'Controls how the plugin handles UI confirmations.',
+			'simple-menu-order-column'
+		) . '</p>';
+	}
+
+	/**
+	 * Generate html checkbox to disable UI confirmation.
+	 *
+	 * @param array $options Option name.
+	 *
+	 * @return void
+	 */
+	public static function output_admin_setting( array $options ) {
+		$checked = filter_var( get_option( $options['option_name'], true ), FILTER_VALIDATE_BOOLEAN, array( 'default' => true ) );
+
+		print '<label>';
+		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="checkbox" ' . checked( $checked, true, false ) . ' class="smoc-input" value="1" />';
+		print esc_attr( $options['option_desc'] );
+		print '</label>';
 	}
 
 	/**
@@ -120,10 +224,49 @@ final class SimpleMenuOrderColumn {
 	public function admin_enqueue_scripts() {
 		$wp_scripts_get_suffix = wp_scripts_get_suffix();
 
-		wp_enqueue_script( 'simple-menu-order-column', plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ), array( 'wp-i18n' ), SMOC_PLUGIN_VERSION, true );
-		wp_enqueue_style( 'simple-menu-order-column', plugins_url( 'assets/css/simple-menu-order-column' . $wp_scripts_get_suffix . '.css', SMOC_PLUGIN_FILE ), array(), SMOC_PLUGIN_VERSION );
+		wp_enqueue_script(
+			'simple-menu-order-column',
+			plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ),
+			array( 'wp-i18n' ),
+			SMOC_PLUGIN_VERSION,
+			true
+		);
 
-		wp_set_script_translations( 'simple-menu-order-column', 'simple-menu-order-column', plugin_dir_path( SMOC_PLUGIN_FILE ) . '/i18n/languages/' );
+		wp_localize_script(
+			'simple-menu-order-column',
+			'smoc_ui',
+			array(
+				'enable_confirm' => filter_var(
+					get_option(
+						self::SMOC_OPTION_UI_CONFIRM,
+						true
+					),
+					FILTER_VALIDATE_BOOLEAN,
+					array( 'default' => true )
+				),
+				'tab_to_next'    => filter_var(
+					get_option(
+						self::SMOC_OPTION_UI_TAB_TO_NEXT,
+						true
+					),
+					FILTER_VALIDATE_BOOLEAN,
+					array( 'default' => true )
+				),
+			)
+		);
+
+		wp_set_script_translations(
+			'simple-menu-order-column',
+			'simple-menu-order-column',
+			plugin_dir_path( SMOC_PLUGIN_FILE ) . '/i18n/languages/'
+		);
+
+		wp_enqueue_style(
+			'simple-menu-order-column',
+			plugins_url( 'assets/css/simple-menu-order-column' . $wp_scripts_get_suffix . '.css', SMOC_PLUGIN_FILE ),
+			array(),
+			SMOC_PLUGIN_VERSION
+		);
 	}
 
 	/**
@@ -157,8 +300,17 @@ final class SimpleMenuOrderColumn {
 		/**
 		 * Get post_id & post_menu_order.
 		 */
-		$post_id         = filter_input( INPUT_POST, 'post_id', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
-		$post_menu_order = filter_input( INPUT_POST, 'post_menu_order', FILTER_VALIDATE_INT );
+		$post_id         = filter_input(
+			INPUT_POST,
+			'post_id',
+			FILTER_VALIDATE_INT,
+			array( 'options' => array( 'min_range' => 1 ) )
+		);
+		$post_menu_order = filter_input(
+			INPUT_POST,
+			'post_menu_order',
+			FILTER_VALIDATE_INT
+		);
 
 		if (
 			! is_integer( $post_id ) ||

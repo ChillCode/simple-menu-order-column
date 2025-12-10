@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 2.0.2 2025-12-10 =
+
+* Allow to disable confirm window
+* Allow to disable tab to next input field when data is updated
+* Minor code changes
+
 = 2.0.1 2025-12-01 =
 
 * Allow negative values

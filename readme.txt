@@ -2,9 +2,9 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -56,6 +56,9 @@ That's it! You've successfully installed and activated **Simple Menu Order Colum
 
 Once installed you will see an input box on every listing item.
 
+To disable confirm prompt after menu order is updated visit **Wordpres Settings->Writing** and untick the option **Enable confirmation on input exit**
+To disable tab to next on position update visit **Wordpress Settings->Writing** and untick the option Enable **Go to next field on update**
+
 == Usage ==
 
 1. **Access WordPress Admin**: Log in to your **WordPress** admin dashboard. This is usually accessed by adding "/wp-admin" to the end of your website's URL and entering your credentials.
@@ -66,9 +69,10 @@ Once installed you will see an input box on every listing item.
 
 == Changelog ==
 
-= 2.0.1 2025-12-01 =
+= 2.0.2 2025-12-10 =
 
-* Allow negative values
+* Allow to disable confirm window
+* Allow to disable tab to next input field when data is updated
 
 == Upgrade Notice ==
 
@@ -83,6 +87,10 @@ Localize Javascript.
 Vanilla Javascript, no jQuery.
 Minor PHPDoc fixes.
 Minor code fixes.
+
+= 2.0.2 =
+Allow to disable confirm window when input field loses focus
+Allow to disable tab to next input field when data is updated
 
 == Screenshots ==
 
