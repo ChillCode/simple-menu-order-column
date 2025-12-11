@@ -58,10 +58,17 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
-= 2.1.0 2025-12-10 =
+### 2.1.0 2025-12-10 =
 
 * Allow to disable confirm window
 * Allow to disable tab to next input field when data is updated
+
+### 1.0.1
+Fix false positive with Woo HPOS.
+
+### 1.0.2
+Minor code changes.
+Localize Javascript.
 
 ### 2.0.0 2025-07-02
 
@@ -71,12 +78,10 @@ Once installed you will see an input box on every listing item.
 
 ## Upgrade Notice
 
-### 1.0.1
-Fix false positive with Woo HPOS.
+### 2.1.0 2025-12-10 =
 
-### 1.0.2
-Minor code changes.
-Localize Javascript.
+* Allow to disable confirm window
+* Allow to disable tab to next input field when data is updated
 
 ## Screenshots
 
