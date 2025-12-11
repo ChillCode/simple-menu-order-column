@@ -76,21 +76,21 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 
 == Upgrade Notice ==
 
-= 1.0.1 =
-Fix false positive with Woo HPOS.
+= 2.1.0 =
 
-= 1.0.2 =
-Minor code changes.
-Localize Javascript.
+Improve UI functionality
 
 = 2.0.0 =
 Vanilla Javascript, no jQuery.
 Minor PHPDoc fixes.
 Minor code fixes.
 
-= 2.1.0 =
-Allow to disable confirm window when input field loses focus
-Allow to disable tab to next input field when data is updated
+= 1.0.2 =
+Minor code changes.
+Localize Javascript.
+
+= 1.0.1 =
+Fix false positive with Woo HPOS.
 
 == Screenshots ==
 
