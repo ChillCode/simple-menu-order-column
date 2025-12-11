@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-08 01:56+0000\n"
-"PO-Revision-Date: 2024-12-15 23:46+0000\n"
+"PO-Revision-Date: 2025-12-11 00:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -20,13 +20,21 @@ msgstr ""
 msgid "Add a menu order column to your listings."
 msgstr "Afegiu una columna d'ordre de menú als vostres llistats."
 
-#: assets/js/simple-menu-order-column.js:130
+#: assets/js/simple-menu-order-column.js:171
 msgid "An error ocurred while updating menu order."
 msgstr "S'ha produït un error en actualitzar l'ordre del menú."
 
 #. Author of the plugin
 msgid "Chillcode"
 msgstr "Chillcode"
+
+#: includes/class-simplemenuordercolumn.php:164
+msgid "Controls how the plugin handles UI confirmations."
+msgstr "Controla com el connector gestiona les confirmacions."
+
+#: includes/class-simplemenuordercolumn.php:135
+msgid "Go to next field on update"
+msgstr "Anar al camp següent en actualitzar"
 
 #. Author URI of the plugin
 msgid "https://github.com/chillcode/"
@@ -36,42 +44,60 @@ msgstr "https://github.com/chillcode/"
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr "https://github.com/chillcode/simple-menu-order-column"
 
-#: assets/js/simple-menu-order-column.js:147
+#: includes/class-simplemenuordercolumn.php:141
+msgid ""
+"If disabled, the cursor will remain in the input field after menu order is "
+"updated."
+msgstr ""
+"Si està desactivat, el cursor romandrà al camp d'entrada després que "
+"s'actualitzi l'ordre del menú."
+
+#: includes/class-simplemenuordercolumn.php:119
+msgid "If disabled, the value will be updated automatically without prompting."
+msgstr ""
+"Si està desactivat, el valor s'actualitzarà automàticament sense demanar "
+"confirmació."
+
+#: assets/js/simple-menu-order-column.js:123
 msgid ""
 "Invalid WP installation, variables typenow or ajaxurl are not initialized."
 msgstr ""
 "La instal·lació de WP no és vàlida, les variables typenow o ajaxurl no estan "
 "inicialitzades."
 
-#: includes/class-simplemenuordercolumn.php:225
+#: includes/class-simplemenuordercolumn.php:387
 msgid "Order"
 msgstr "Ordre"
 
-#: assets/js/simple-menu-order-column.js:252
+#: assets/js/simple-menu-order-column.js:54
 msgid "Should the menu order value be updated?"
 msgstr "S'ha d'actualitzar el valor de la comanda del menú?"
+
+#: includes/class-simplemenuordercolumn.php:113
+msgid "Show confirmation prompt"
+msgstr "Mostra missatge de confirmació"
 
 #. Name of the plugin
 msgid "Simple Menu Order Column"
 msgstr "Simple Menu Order Column"
 
-#: assets/js/simple-menu-order-column.js:105
+#: assets/js/simple-menu-order-column.js:156
 msgid "The menu order has been updated successfully."
 msgstr "L'ordre del menú s'ha actualitzat correctament."
 
-#: assets/js/simple-menu-order-column.js:159
+#: assets/js/simple-menu-order-column.js:110
 msgid "The menu order value is invalid."
 msgstr "El valor de l'ordre del menú no és vàlid."
 
-#: assets/js/simple-menu-order-column.js:39
+#: assets/js/simple-menu-order-column.js:102
 msgid "The post_id is invalid."
 msgstr "El post_id no és vàlid."
 
-#: assets/js/simple-menu-order-column.js:171
+#: assets/js/simple-menu-order-column.js:117
 msgid "The postNonce is invalid."
 msgstr "El postNonce no és vàlid."
 
-#: assets/js/simple-menu-order-column.js:63
+#: assets/js/simple-menu-order-column.js:136
 #| msgid "Updating Menu Order"
 msgid "Updating menu order..."
 msgstr "Actualitzant l'ordre de menú..."

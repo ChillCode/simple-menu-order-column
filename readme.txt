@@ -4,7 +4,7 @@ Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.2
+Stable tag: 2.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,7 +69,7 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 
 == Changelog ==
 
-= 2.0.2 2025-12-10 =
+= 2.1.0 2025-12-10 =
 
 * Allow to disable confirm window
 * Allow to disable tab to next input field when data is updated
@@ -88,7 +88,7 @@ Vanilla Javascript, no jQuery.
 Minor PHPDoc fixes.
 Minor code fixes.
 
-= 2.0.2 =
+= 2.1.0 =
 Allow to disable confirm window when input field loses focus
 Allow to disable tab to next input field when data is updated
 

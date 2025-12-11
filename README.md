@@ -56,7 +56,12 @@ Once installed you will see an input box on every listing item.
 
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
-## Changelog
+### Changelog
+
+= 2.1.0 2025-12-10 =
+
+* Allow to disable confirm window
+* Allow to disable tab to next input field when data is updated
 
 ### 2.0.0 2025-07-02
 
