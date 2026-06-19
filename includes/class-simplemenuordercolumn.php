@@ -118,7 +118,6 @@ final class SimpleMenuOrderColumn {
 			'smoc_section',
 			array(
 				'option_name' => self::SMOC_OPTION_ALLOWED_TYPES,
-				'option_desc' => esc_attr__( 'If disabled, the value will be updated automatically without prompting.', 'simple-menu-order-column' ),
 			)
 		);
 
