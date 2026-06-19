@@ -4,7 +4,7 @@
  *
  * @package SimpleMenuOrderColumn
  *
- * Copyright: (c) 2003-2025 Chillcode
+ * Copyright: (c) 2003 Chillcode
  */
 
 namespace SMOC;
@@ -17,6 +17,7 @@ defined( 'ABSPATH' ) || exit;
  * SMOCWC class.
  */
 final class SimpleMenuOrderColumn {
+
 
 	/**
 	 * The single instance of the class.
@@ -34,6 +35,7 @@ final class SimpleMenuOrderColumn {
 	 */
 	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment' );
 
+	public const SMOC_OPTION_ALLOWED_TYPES  = 'smoc_ui_allowed_types';
 	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';
 	public const SMOC_OPTION_UI_TAB_TO_NEXT = 'smoc_ui_tab_to_next';
 
@@ -100,6 +102,28 @@ final class SimpleMenuOrderColumn {
 
 		register_setting(
 			'writing',
+			self::SMOC_OPTION_ALLOWED_TYPES,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => array( __CLASS__, 'input_sanitize_textbox' ),
+				'default'           => '',
+			)
+		);
+
+		add_settings_field(
+			self::SMOC_OPTION_ALLOWED_TYPES,
+			__( 'WP_Post types allowed', 'simple-menu-order-column' ),
+			array( __CLASS__, 'output_admin_textbox' ),
+			'writing',
+			'smoc_section',
+			array(
+				'option_name' => self::SMOC_OPTION_ALLOWED_TYPES,
+				'option_desc' => esc_attr__( 'If disabled, the value will be updated automatically without prompting.', 'simple-menu-order-column' ),
+			)
+		);
+
+		register_setting(
+			'writing',
 			self::SMOC_OPTION_UI_CONFIRM,
 			array(
 				'type'              => 'boolean',
@@ -111,7 +135,7 @@ final class SimpleMenuOrderColumn {
 		add_settings_field(
 			self::SMOC_OPTION_UI_CONFIRM,
 			__( 'Show confirmation prompt', 'simple-menu-order-column' ),
-			array( __CLASS__, 'output_admin_setting' ),
+			array( __CLASS__, 'output_admin_checkbox' ),
 			'writing',
 			'smoc_section',
 			array(
@@ -133,7 +157,7 @@ final class SimpleMenuOrderColumn {
 		add_settings_field(
 			self::SMOC_OPTION_UI_TAB_TO_NEXT,
 			__( 'Go to next field on update', 'simple-menu-order-column' ),
-			array( __CLASS__, 'output_admin_setting' ),
+			array( __CLASS__, 'output_admin_checkbox' ),
 			'writing',
 			'smoc_section',
 			array(
@@ -156,12 +180,51 @@ final class SimpleMenuOrderColumn {
 	}
 
 	/**
+	 * Sanitize textbox value.
+	 *
+	 * @param mixed $allowed_types Value to sanitize.
+	 *
+	 * @return int
+	 */
+	public static function input_sanitize_textbox( $allowed_types ) {
+		if ( ! empty( $allowed_types ) ) {
+			$allowed_types           = sanitize_text_field( $allowed_types );
+			$allowed_type_is_wp_post = true;
+			$allowed_types_ary       = array_filter(
+				array_map(
+					function ( $allowed_type ) use ( &$allowed_type_is_wp_post ) {
+						$allowed_type = trim( $allowed_type );
+						if ( empty( $allowed_type ) ) {
+							return null;
+						} elseif ( null === get_post_type_object( $allowed_type ) ) {
+							/* translators: %s: The invalid post type slug entered by the user */
+							add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'text-domain' ), esc_html( $allowed_type ) ), 'error' );
+							$allowed_type_is_wp_post = false;
+							return null;
+						}
+						return $allowed_type;
+					},
+					explode( ',', $allowed_types )
+				)
+			);
+
+			if ( true === $allowed_type_is_wp_post ) {
+				return implode( ',', array_unique( $allowed_types_ary ) );
+			}
+
+			return get_option( self::SMOC_OPTION_ALLOWED_TYPES, self::get_default_allowed_types() );
+		}
+
+		return implode( ',', self::get_default_allowed_types() );
+	}
+
+	/**
 	 * Generate html checkbox to disable UI confirmation section
 	 *
 	 * @return void
 	 */
 	public static function output_section_description() {
-		echo '<p>' . esc_html__(
+		print '<p>' . esc_html__(
 			'Controls how the plugin handles UI confirmations.',
 			'simple-menu-order-column'
 		) . '</p>';
@@ -174,12 +237,27 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public static function output_admin_setting( array $options ) {
+	public static function output_admin_checkbox( array $options ) {
 		$checked = filter_var( get_option( $options['option_name'], true ), FILTER_VALIDATE_BOOLEAN, array( 'default' => true ) );
 
 		print '<label>';
 		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="checkbox" ' . checked( $checked, true, false ) . ' class="smoc-input" value="1" />';
 		print esc_attr( $options['option_desc'] );
+		print '</label>';
+	}
+
+	/**
+	 * Generate html checkbox to disable UI confirmation.
+	 *
+	 * @param array $options Option name.
+	 *
+	 * @return void
+	 */
+	public static function output_admin_textbox( array $options ) {
+		$value = filter_var( get_option( $options['option_name'], implode( ', ', self::get_allowed_types() ) ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		print '<label>';
+		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="text" class="regular-text ltr" value="' . esc_attr( $value ) . '" />';
 		print '</label>';
 	}
 
@@ -198,7 +276,7 @@ final class SimpleMenuOrderColumn {
 
 		if (
 			! in_array( $current_screen->base, array( 'edit', 'upload' ), true ) ||
-			! in_array( $current_screen->post_type, self::$smoc_allowed_types, true )
+			! in_array( $current_screen->post_type, self::get_allowed_types(), true )
 		) {
 			return;
 		}
@@ -272,9 +350,18 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Allowed post_types.
 	 *
-	 * @return array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
+	 * @return array
 	 */
 	public static function get_allowed_types() {
+		return array_filter( explode( ',', get_option( self::SMOC_OPTION_ALLOWED_TYPES ) ) );
+	}
+
+	/**
+	 * Allowed default post_types.
+	 *
+	 * @return array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
+	 */
+	public static function get_default_allowed_types() {
 		return self::$smoc_allowed_types;
 	}
 
@@ -293,7 +380,7 @@ final class SimpleMenuOrderColumn {
 		 */
 		$post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
-		if ( ! $post_type || ! in_array( $post_type, self::$smoc_allowed_types, true ) ) {
+		if ( ! $post_type || ! in_array( $post_type, self::get_allowed_types(), true ) ) {
 			wp_send_json_error();
 		}
 

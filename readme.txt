@@ -2,9 +2,9 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -68,6 +68,11 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
 == Changelog ==
+
+### 2.1.1 2025-06-19
+
+* Allow to modify allowed WP_Post types to show menu_order column on
+* Check WP 7.0 compatibility
 
 = 2.1.0 2025-12-10 =
 

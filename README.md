@@ -58,6 +58,11 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
+### 2.1.1 2025-06-19
+
+* Allow to modify allowed WP_Post types to show menu_order column on
+* Check WP 7.0 compatibility
+
 ### 2.1.0 2025-12-10
 
 * Allow to disable confirm window
