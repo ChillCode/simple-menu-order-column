@@ -4,7 +4,7 @@
  *
  * @package   Simple Menu Order Column
  * @author    Chillcode
- * @copyright Copyright (c) 2003-2024, Chillcode (https://github.com/chillcode/)
+ * @copyright Copyright (c) 2003, Chillcode (https://github.com/chillcode/)
  * @license   GPLv3
  *
  * @wordpress-plugin
