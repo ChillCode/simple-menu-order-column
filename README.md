@@ -58,6 +58,10 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
+### 2.1.2 2025-06-20
+
+* Use correct domain
+
 ### 2.1.1 2025-06-19
 
 * Allow to modify allowed WP_Post types to show menu_order column on
@@ -83,10 +87,9 @@ Once installed you will see an input box on every listing item.
 
 ## Upgrade Notice
 
-### 2.1.0 2025-12-10
+### 2.1.2 2025-06-20
 
-* Allow to disable confirm window
-* Allow to disable tab to next input field when data is updated
+* Use correct domain
 
 ## Screenshots
 

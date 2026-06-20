@@ -4,7 +4,7 @@ Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -68,6 +68,10 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
 == Changelog ==
+
+### 2.1.2 2025-06-20
+
+* Use correct domain
 
 ### 2.1.1 2025-06-19
 
