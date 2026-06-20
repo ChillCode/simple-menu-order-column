@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-08 01:56+0000\n"
-"PO-Revision-Date: 2025-12-11 00:48+0000\n"
+"PO-Revision-Date: 2026-06-20 07:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -14,6 +14,12 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: simple-menu-order-column"
+
+#. %s: The invalid post type slug entered by the user
+#: includes/class-simplemenuordercolumn.php:198
+#, php-format
+msgid "\"%s\" is not valid post type for this plugin."
+msgstr "\"%s\" no es un tipo de publicación válida para esta extensión."
 
 #. Description of the plugin
 #| msgid "Add a menu order colum to your listings."
@@ -28,11 +34,11 @@ msgstr "Se produjo un error al actualizar el orden de menú."
 msgid "Chillcode"
 msgstr "Chillcode"
 
-#: includes/class-simplemenuordercolumn.php:164
+#: includes/class-simplemenuordercolumn.php:227
 msgid "Controls how the plugin handles UI confirmations."
 msgstr "Controla cómo la extensión maneja las confirmaciones."
 
-#: includes/class-simplemenuordercolumn.php:135
+#: includes/class-simplemenuordercolumn.php:155
 msgid "Go to next field on update"
 msgstr "Ir al siguiente campo después de actualizar"
 
@@ -44,7 +50,7 @@ msgstr "https://github.com/chillcode/"
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr "https://github.com/chillcode/simple-menu-order-column"
 
-#: includes/class-simplemenuordercolumn.php:141
+#: includes/class-simplemenuordercolumn.php:161
 msgid ""
 "If disabled, the cursor will remain in the input field after menu order is "
 "updated."
@@ -52,7 +58,7 @@ msgstr ""
 "Si está deshabilitado, el cursor permanecerá en el campo de entrada después "
 "de que se actualice el orden del menú."
 
-#: includes/class-simplemenuordercolumn.php:119
+#: includes/class-simplemenuordercolumn.php:139
 msgid "If disabled, the value will be updated automatically without prompting."
 msgstr ""
 "Si está deshabilitado, el valor se actualizará automáticamente sin preguntar."
@@ -64,7 +70,7 @@ msgstr ""
 "Instalación de WordPress no válida, las variables typenow o ajaxurl no están "
 "inicializadas."
 
-#: includes/class-simplemenuordercolumn.php:387
+#: includes/class-simplemenuordercolumn.php:474
 msgid "Order"
 msgstr "Orden"
 
@@ -72,7 +78,7 @@ msgstr "Orden"
 msgid "Should the menu order value be updated?"
 msgstr "¿Se debe actualizar el valor del orden de menú?"
 
-#: includes/class-simplemenuordercolumn.php:113
+#: includes/class-simplemenuordercolumn.php:133
 msgid "Show confirmation prompt"
 msgstr "Mostrar mensaje de confirmación"
 
@@ -99,3 +105,7 @@ msgstr "El identificador único no es vñaido"
 #: assets/js/simple-menu-order-column.js:136
 msgid "Updating menu order..."
 msgstr "Actualizando el orden de menú..."
+
+#: includes/class-simplemenuordercolumn.php:112
+msgid "WP_Post types allowed"
+msgstr "Tipos de WP_Post permitidos"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 00:40+0000\n"
+"POT-Creation-Date: 2026-06-20 07:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,6 +15,12 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.6; wp-6.4.3\n"
 "X-Domain: simple-menu-order-column"
+
+#. %s: The invalid post type slug entered by the user
+#: includes/class-simplemenuordercolumn.php:198
+#, php-format
+msgid "\"%s\" is not valid post type for this plugin."
+msgstr ""
 
 #. Description of the plugin
 msgid "Add a menu order column to your listings."
@@ -28,11 +34,11 @@ msgstr ""
 msgid "Chillcode"
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:164
+#: includes/class-simplemenuordercolumn.php:227
 msgid "Controls how the plugin handles UI confirmations."
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:135
+#: includes/class-simplemenuordercolumn.php:155
 msgid "Go to next field on update"
 msgstr ""
 
@@ -44,13 +50,13 @@ msgstr ""
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:141
+#: includes/class-simplemenuordercolumn.php:161
 msgid ""
 "If disabled, the cursor will remain in the input field after menu order is "
 "updated."
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:119
+#: includes/class-simplemenuordercolumn.php:139
 msgid "If disabled, the value will be updated automatically without prompting."
 msgstr ""
 
@@ -59,7 +65,7 @@ msgid ""
 "Invalid WP installation, variables typenow or ajaxurl are not initialized."
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:387
+#: includes/class-simplemenuordercolumn.php:474
 msgid "Order"
 msgstr ""
 
@@ -67,7 +73,7 @@ msgstr ""
 msgid "Should the menu order value be updated?"
 msgstr ""
 
-#: includes/class-simplemenuordercolumn.php:113
+#: includes/class-simplemenuordercolumn.php:133
 msgid "Show confirmation prompt"
 msgstr ""
 
@@ -93,4 +99,8 @@ msgstr ""
 
 #: assets/js/simple-menu-order-column.js:136
 msgid "Updating menu order..."
+msgstr ""
+
+#: includes/class-simplemenuordercolumn.php:112
+msgid "WP_Post types allowed"
 msgstr ""

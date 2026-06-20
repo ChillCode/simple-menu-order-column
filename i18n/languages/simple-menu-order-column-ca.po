@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Simple Menu Order Column\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-08 01:56+0000\n"
-"PO-Revision-Date: 2025-12-11 00:45+0000\n"
+"PO-Revision-Date: 2026-06-20 07:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -14,6 +14,12 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: simple-menu-order-column"
+
+#. %s: The invalid post type slug entered by the user
+#: includes/class-simplemenuordercolumn.php:198
+#, php-format
+msgid "\"%s\" is not valid post type for this plugin."
+msgstr "\"%s\" no és un tipus de publicació vàlid per a aquest connector."
 
 #. Description of the plugin
 #| msgid "Add a menu order colum to your listings."
@@ -28,11 +34,11 @@ msgstr "S'ha produït un error en actualitzar l'ordre del menú."
 msgid "Chillcode"
 msgstr "Chillcode"
 
-#: includes/class-simplemenuordercolumn.php:164
+#: includes/class-simplemenuordercolumn.php:227
 msgid "Controls how the plugin handles UI confirmations."
 msgstr "Controla com el connector gestiona les confirmacions."
 
-#: includes/class-simplemenuordercolumn.php:135
+#: includes/class-simplemenuordercolumn.php:155
 msgid "Go to next field on update"
 msgstr "Anar al camp següent en actualitzar"
 
@@ -44,7 +50,7 @@ msgstr "https://github.com/chillcode/"
 msgid "https://github.com/chillcode/simple-menu-order-column"
 msgstr "https://github.com/chillcode/simple-menu-order-column"
 
-#: includes/class-simplemenuordercolumn.php:141
+#: includes/class-simplemenuordercolumn.php:161
 msgid ""
 "If disabled, the cursor will remain in the input field after menu order is "
 "updated."
@@ -52,7 +58,7 @@ msgstr ""
 "Si està desactivat, el cursor romandrà al camp d'entrada després que "
 "s'actualitzi l'ordre del menú."
 
-#: includes/class-simplemenuordercolumn.php:119
+#: includes/class-simplemenuordercolumn.php:139
 msgid "If disabled, the value will be updated automatically without prompting."
 msgstr ""
 "Si està desactivat, el valor s'actualitzarà automàticament sense demanar "
@@ -65,7 +71,7 @@ msgstr ""
 "La instal·lació de WP no és vàlida, les variables typenow o ajaxurl no estan "
 "inicialitzades."
 
-#: includes/class-simplemenuordercolumn.php:387
+#: includes/class-simplemenuordercolumn.php:474
 msgid "Order"
 msgstr "Ordre"
 
@@ -73,7 +79,7 @@ msgstr "Ordre"
 msgid "Should the menu order value be updated?"
 msgstr "S'ha d'actualitzar el valor de la comanda del menú?"
 
-#: includes/class-simplemenuordercolumn.php:113
+#: includes/class-simplemenuordercolumn.php:133
 msgid "Show confirmation prompt"
 msgstr "Mostra missatge de confirmació"
 
@@ -101,3 +107,7 @@ msgstr "El postNonce no és vàlid."
 #| msgid "Updating Menu Order"
 msgid "Updating menu order..."
 msgstr "Actualitzant l'ordre de menú..."
+
+#: includes/class-simplemenuordercolumn.php:112
+msgid "WP_Post types allowed"
+msgstr "Tipus de WP_Post permesos"

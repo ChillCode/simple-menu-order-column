@@ -11,8 +11,6 @@ namespace SMOC;
 
 use WP_Error;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * SMOCWC class.
  */
@@ -52,7 +50,6 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public function plugins_loaded() {
-
 		/** If we are not in admin pages nothing to do. */
 		if ( ! is_admin() ) {
 			return;
@@ -106,7 +103,7 @@ final class SimpleMenuOrderColumn {
 			array(
 				'type'              => 'string',
 				'sanitize_callback' => array( __CLASS__, 'input_sanitize_textbox' ),
-				'default'           => '',
+				'default'           => self::get_default_allowed_types(),
 			)
 		);
 
@@ -199,6 +196,7 @@ final class SimpleMenuOrderColumn {
 						} elseif ( null === get_post_type_object( $allowed_type ) ) {
 							/* translators: %s: The invalid post type slug entered by the user */
 							add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'simple-menu-order-column' ), esc_html( $allowed_type ) ), 'error' );
+
 							return null;
 						}
 
