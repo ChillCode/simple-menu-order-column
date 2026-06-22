@@ -185,7 +185,7 @@ final class SimpleMenuOrderColumn {
 	public static function input_sanitize_textbox( $allowed_types ) {
 		if ( ! empty( $allowed_types ) ) {
 			$allowed_types           = sanitize_text_field( $allowed_types );
-			$allowed_type_is_wp_post = false;
+			$allowed_type_is_wp_post = true;
 			$allowed_types_ary       = array_filter(
 				array_map(
 					function ( $allowed_type ) use ( &$allowed_type_is_wp_post ) {
@@ -194,13 +194,12 @@ final class SimpleMenuOrderColumn {
 						if ( empty( $allowed_type ) ) {
 							return null;
 						} elseif ( null === get_post_type_object( $allowed_type ) ) {
+							$allowed_type_is_wp_post = false;
 							/* translators: %s: The invalid post type slug entered by the user */
 							add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'simple-menu-order-column' ), esc_html( $allowed_type ) ), 'error' );
 
 							return null;
 						}
-
-						$allowed_type_is_wp_post = true;
 
 						return $allowed_type;
 					},
