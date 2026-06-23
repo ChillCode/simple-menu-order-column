@@ -184,35 +184,29 @@ final class SimpleMenuOrderColumn {
 	 */
 	public static function input_sanitize_textbox( $allowed_types ) {
 		if ( ! empty( $allowed_types ) ) {
-			$allowed_types           = sanitize_text_field( $allowed_types );
-			$allowed_type_is_wp_post = false;
-			$allowed_types_ary       = array_filter(
-				array_map(
-					function ( $allowed_type ) use ( &$allowed_type_is_wp_post ) {
-						$allowed_type = trim( $allowed_type );
+			$allowed_types     = sanitize_text_field( $allowed_types );
+			$allowed_types_ary = array();
 
-						if ( empty( $allowed_type ) ) {
-							return null;
-						} elseif ( null === get_post_type_object( $allowed_type ) ) {
-							/* translators: %s: The invalid post type slug entered by the user */
-							add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'simple-menu-order-column' ), esc_html( $allowed_type ) ), 'error' );
+			foreach ( explode( ',', $allowed_types ) as $allowed_type ) {
+				$allowed_type = trim( $allowed_type );
 
-							return null;
-						}
+				if ( empty( $allowed_type ) ) {
+					continue;
+				}
 
-						$allowed_type_is_wp_post = true;
+				if ( null === get_post_type_object( $allowed_type ) ) {
+					/* translators: %s: The invalid post type slug entered by the user */
+					add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'simple-menu-order-column' ), esc_html( $allowed_type ) ), 'error' );
 
-						return $allowed_type;
-					},
-					explode( ',', $allowed_types )
-				)
-			);
+					continue;
+				}
 
-			if ( true === $allowed_type_is_wp_post ) {
-				return implode( ',', array_unique( $allowed_types_ary ) );
+				$allowed_types_ary[] = $allowed_type;
 			}
 
-			return implode( get_option( self::SMOC_OPTION_ALLOWED_TYPES, self::get_default_allowed_types() ) );
+			if ( ! empty( $allowed_types_ary ) ) {
+				return implode( ',', $allowed_types_ary );
+			}
 		}
 
 		return implode( ',', self::get_default_allowed_types() );
@@ -254,10 +248,10 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public static function output_admin_textbox( array $options ) {
-		$value = filter_var( get_option( $options['option_name'], implode( ',', self::get_allowed_types() ) ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$allowed_types = implode( ',', self::get_allowed_types() );
 
 		print '<label>';
-		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="text" class="regular-text ltr" value="' . esc_attr( $value ) . '" />';
+		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="text" class="regular-text ltr" value="' . esc_attr( $allowed_types ) . '" />';
 		print '</label>';
 	}
 
@@ -353,7 +347,7 @@ final class SimpleMenuOrderColumn {
 	 * @return array
 	 */
 	public static function get_allowed_types() {
-		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES, self::get_default_allowed_types() );
+		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES );
 
 		return is_array( $allowed_types ) ? array_filter( $allowed_types ) : array_filter( explode( ',', $allowed_types ) );
 	}
@@ -500,4 +494,60 @@ final class SimpleMenuOrderColumn {
 
 		return self::$smoc_instace;
 	}
+
+	/**
+	 * Delete options.
+	 *
+	 * @return int|bool
+	 */
+	public static function delete_options() {
+		global $wpdb;
+		/**
+		 * WP_Query
+		 *
+		 * @var \wpdb $wpdb
+		 */
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
+		return $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'smoc_%'" );
+	}
+
+	/**
+	 * Activate plugin, keep for meta update.
+	 *
+	 * @return void
+	 */
+	public static function activate() {
+	}
+
+	/**
+	 * Deactivate plugin.
+	 *
+	 * @return void
+	 */
+	public static function deactivate() {
+	}
+
+	/**
+	 * Uninstall plugin.
+	 *
+	 * @return void
+	 */
+	public static function uninstall() {
+		self::delete_options();
+	}
 }
+
+register_activation_hook(
+	SMOC_PLUGIN_FILE,
+	array( SimpleMenuOrderColumn::class, 'activate' )
+);
+
+register_deactivation_hook(
+	SMOC_PLUGIN_FILE,
+	array( SimpleMenuOrderColumn::class, 'deactivate' )
+);
+
+register_uninstall_hook(
+	SMOC_PLUGIN_FILE,
+	array( SimpleMenuOrderColumn::class, 'uninstall' )
+);

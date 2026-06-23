@@ -69,6 +69,11 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 
 == Changelog ==
 
+### 2.1.2 2025-06-23
+
+* Add domain translations
+* Fix: Prevent empty types
+
 ### 2.1.2 2025-06-20
 
 * Use correct domain
@@ -85,7 +90,10 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 
 == Upgrade Notice ==
 
-= 2.1.0 =
+= 2.1.2 =
+
+* Add domain translations
+* Fix: Prevent empty types
 
 Improve UI functionality
 
