@@ -33,6 +33,7 @@ final class SimpleMenuOrderColumn {
 	 */
 	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment' );
 
+	public const SMOC_OPTION_ALLOWED_TYPES  = 'smoc_ui_allowed_types';
 	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';
 	public const SMOC_OPTION_UI_TAB_TO_NEXT = 'smoc_ui_tab_to_next';
 
@@ -98,6 +99,27 @@ final class SimpleMenuOrderColumn {
 
 		register_setting(
 			'writing',
+			self::SMOC_OPTION_ALLOWED_TYPES,
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => array( __CLASS__, 'input_sanitize_textbox' ),
+				'default'           => self::get_default_allowed_types(),
+			)
+		);
+
+		add_settings_field(
+			self::SMOC_OPTION_ALLOWED_TYPES,
+			__( 'WP_Post types allowed', 'simple-menu-order-column' ),
+			array( __CLASS__, 'output_admin_textbox' ),
+			'writing',
+			'smoc_section',
+			array(
+				'option_name' => self::SMOC_OPTION_ALLOWED_TYPES,
+			)
+		);
+
+		register_setting(
+			'writing',
 			self::SMOC_OPTION_UI_CONFIRM,
 			array(
 				'type'              => 'boolean',
@@ -154,6 +176,49 @@ final class SimpleMenuOrderColumn {
 	}
 
 	/**
+	 * Sanitize textbox value.
+	 *
+	 * @param mixed $allowed_types Value to sanitize.
+	 *
+	 * @return int
+	 */
+	public static function input_sanitize_textbox( $allowed_types ) {
+		if ( ! empty( $allowed_types ) ) {
+			$allowed_types           = sanitize_text_field( $allowed_types );
+			$allowed_type_is_wp_post = false;
+			$allowed_types_ary       = array_filter(
+				array_map(
+					function ( $allowed_type ) use ( &$allowed_type_is_wp_post ) {
+						$allowed_type = trim( $allowed_type );
+
+						if ( empty( $allowed_type ) ) {
+							return null;
+						} elseif ( null === get_post_type_object( $allowed_type ) ) {
+							/* translators: %s: The invalid post type slug entered by the user */
+							add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'simple-menu-order-column' ), esc_html( $allowed_type ) ), 'error' );
+
+							return null;
+						}
+
+						$allowed_type_is_wp_post = true;
+
+						return $allowed_type;
+					},
+					explode( ',', $allowed_types )
+				)
+			);
+
+			if ( true === $allowed_type_is_wp_post ) {
+				return implode( ',', array_unique( $allowed_types_ary ) );
+			}
+
+			return implode( get_option( self::SMOC_OPTION_ALLOWED_TYPES, self::get_default_allowed_types() ) );
+		}
+
+		return implode( ',', self::get_default_allowed_types() );
+	}
+
+	/**
 	 * Generate html checkbox to disable UI confirmation section
 	 *
 	 * @return void
@@ -189,7 +254,7 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public static function output_admin_textbox( array $options ) {
-		$value = filter_var( get_option( $options['option_name'], implode( ', ', self::get_allowed_types() ) ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$value = filter_var( get_option( $options['option_name'], implode( ',', self::get_allowed_types() ) ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
 		print '<label>';
 		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="text" class="regular-text ltr" value="' . esc_attr( $value ) . '" />';
@@ -288,6 +353,17 @@ final class SimpleMenuOrderColumn {
 	 * @return array
 	 */
 	public static function get_allowed_types() {
+		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES, self::get_default_allowed_types() );
+
+		return is_array( $allowed_types ) ? array_filter( $allowed_types ) : explode( ',', $allowed_types );
+	}
+
+	/**
+	 * Allowed default post_types.
+	 *
+	 * @return array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
+	 */
+	public static function get_default_allowed_types() {
 		return self::$smoc_allowed_types;
 	}
 
