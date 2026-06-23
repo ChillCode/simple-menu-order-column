@@ -351,13 +351,13 @@ final class SimpleMenuOrderColumn {
 
 		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES );
 
-		$allowed_types = is_array( $allowed_types ) ? array_filter( $allowed_types ) : array_filter( explode( ',', $allowed_types ) );
-
 		if ( empty( $allowed_types ) ) {
 			$allowed_types = self::get_default_allowed_types();
 		}
 
-		foreach ( $allowed_types as $key => $allowed_type ) {
+		$allowed_types = is_array( $allowed_types ) ? array_filter( $allowed_types ) : array_filter( explode( ',', $allowed_types ) );
+
+		foreach ( $allowed_types as $allowed_type ) {
 			$allowed_type = trim( $allowed_type );
 
 			if ( empty( $allowed_type ) || null === get_post_type_object( $allowed_type ) ) {
