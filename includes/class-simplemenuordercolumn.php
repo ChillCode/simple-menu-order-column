@@ -353,7 +353,7 @@ final class SimpleMenuOrderColumn {
 	 * @return array
 	 */
 	public static function get_allowed_types() {
-		return array_filter( explode( ',', get_option( self::SMOC_OPTION_ALLOWED_TYPES ) ) );
+		return array_filter( explode( ',', get_option( self::SMOC_OPTION_ALLOWED_TYPES, self::get_default_allowed_types() ) ) );
 	}
 
 	/**
