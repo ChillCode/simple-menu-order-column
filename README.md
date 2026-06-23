@@ -57,9 +57,10 @@ Once installed you will see an input box on every listing item.
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
 ### Changelog
+### 2.1.2 2025-06-23
 
-### 2.1.2 2025-06-20
-
+* Add domain translations
+* Fix: Prevent empty types
 * Use correct domain
 
 ### 2.1.1 2025-06-19

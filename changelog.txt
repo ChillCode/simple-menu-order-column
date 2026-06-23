@@ -1,7 +1,9 @@
 == Changelog ==
 
-### 2.1.2 2025-06-20
+### 2.1.2 2025-06-23
 
+* Add domain translations
+* Fix: Prevent empty types
 * Use correct domain
 
 ### 2.1.1 2025-06-19

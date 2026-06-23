@@ -73,9 +73,6 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 
 * Add domain translations
 * Fix: Prevent empty types
-
-### 2.1.2 2025-06-20
-
 * Use correct domain
 
 ### 2.1.1 2025-06-19
