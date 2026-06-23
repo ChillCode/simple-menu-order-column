@@ -347,9 +347,27 @@ final class SimpleMenuOrderColumn {
 	 * @return array
 	 */
 	public static function get_allowed_types() {
+		$get_allowed_types = array();
+
 		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES );
 
-		return is_array( $allowed_types ) ? array_filter( $allowed_types ) : array_filter( explode( ',', $allowed_types ) );
+		$allowed_types = is_array( $allowed_types ) ? array_filter( $allowed_types ) : array_filter( explode( ',', $allowed_types ) );
+
+		if ( empty( $allowed_types ) ) {
+			$allowed_types = self::get_default_allowed_types();
+		}
+
+		foreach ( $allowed_types as $key => $allowed_type ) {
+			$allowed_type = trim( $allowed_type );
+
+			if ( empty( $allowed_type ) || null === get_post_type_object( $allowed_type ) ) {
+				continue;
+			}
+
+			$get_allowed_types[] = $allowed_type;
+		}
+
+		return $get_allowed_types;
 	}
 
 	/**
