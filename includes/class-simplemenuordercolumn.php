@@ -347,6 +347,13 @@ final class SimpleMenuOrderColumn {
 	 * @return array
 	 */
 	public static function get_allowed_types() {
+
+		$get_allowed_types = wp_cache_get( 'smoc_get_allowed_types' );
+
+		if ( false !== $get_allowed_types ) {
+			return $get_allowed_types;
+		}
+
 		$get_allowed_types = array();
 
 		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES );
@@ -366,6 +373,8 @@ final class SimpleMenuOrderColumn {
 
 			$get_allowed_types[] = $allowed_type;
 		}
+
+		$get_allowed_types = wp_cache_set( 'smoc_get_allowed_types', $get_allowed_types );
 
 		return $get_allowed_types;
 	}
