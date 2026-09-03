@@ -90,7 +90,7 @@ Once installed you will see an input box on every listing item.
 * Allow to disable confirm window
 * Allow to disable tab to next input field when data is updated
 
-= 2.0.0 =
+= 2.0.0  2025-07-02=
 * Vanilla Javascript, no jQuery.
 * Minor PHPDoc fixes.
 * Minor code fixes.
@@ -101,13 +101,14 @@ Once installed you will see an input box on every listing item.
 
 = 1.0.1 =
 * Fix false positive with Woo HPOS.
+
 == Upgrade Notice ==
 
-= 2.1.3 =
+= 2.1.3 2026-08-13=
 
 * Check WP 7.1 compatibility
 
-= 2.1.2 =
+= 2.1.2  2026-06-20=
 
 * Use correct domain
 * Add domain translations

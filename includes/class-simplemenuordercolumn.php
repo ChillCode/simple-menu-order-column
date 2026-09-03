@@ -469,7 +469,7 @@ final class SimpleMenuOrderColumn {
 		/** All output is XSS secure, $wp_nonce is escaped */
 		print '<div class="smoc-container">';
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' .  (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />';
+		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />';
 		print '</div>';
 	}
 
