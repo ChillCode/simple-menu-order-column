@@ -375,6 +375,10 @@ final class SimpleMenuOrderColumn {
 			$get_allowed_types[] = $allowed_type;
 		}
 
+		if ( empty( $get_allowed_types ) ) {
+			return array();
+		}
+
 		wp_cache_set( 'smoc_get_allowed_types', $get_allowed_types );
 
 		return $get_allowed_types;
