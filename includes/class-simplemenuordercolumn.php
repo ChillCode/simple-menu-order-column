@@ -205,7 +205,7 @@ final class SimpleMenuOrderColumn {
 			}
 
 			if ( ! empty( $allowed_types_ary ) ) {
-				return implode( ',', $allowed_types_ary );
+				return implode( ',', array_unique( $allowed_types_ary ) );
 			}
 		}
 
@@ -472,14 +472,14 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	private static function output_menu_order_column( int $post_id, int $post_menu_order ) {
-		/** Plugins should not change the nonce so make it static for all boxes
+		/**
+		 * Make nonce static for al input boxes.
 		 *
 		 * @var string $wp_nonce */
 		static $wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
-		/** All output is XSS secure, $wp_nonce is escaped */
+
 		print '<div class="smoc-container">';
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />';
+		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		print '</div>';
 	}
 
