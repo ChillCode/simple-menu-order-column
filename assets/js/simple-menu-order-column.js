@@ -211,7 +211,6 @@
 			})
 			.catch(() => {
 				smocInput.value = smocInput.defaultValue;
-				hideLoader();
 				showError();
 			})
 			.finally(() => {
