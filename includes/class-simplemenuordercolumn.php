@@ -178,9 +178,9 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Sanitize textbox value.
 	 *
-	 * @param mixed $allowed_types Value to sanitize.
+	 * @param string $allowed_types Value to sanitize.
 	 *
-	 * @return int
+	 * @return string
 	 */
 	public static function input_sanitize_textbox( $allowed_types ) {
 		if ( ! empty( $allowed_types ) ) {
@@ -227,7 +227,7 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Generate html checkbox to disable UI confirmation.
 	 *
-	 * @param array $options Option name.
+	 * @param array<string, string> $options Option name.
 	 *
 	 * @return void
 	 */
@@ -243,7 +243,7 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Generate html textbox to disable UI confirmation.
 	 *
-	 * @param array $options Option name.
+	 * @param array<string, string> $options Option name.
 	 *
 	 * @return void
 	 */
@@ -345,10 +345,14 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Allowed post_types.
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public static function get_allowed_types() {
 
+		/**
+		 * Cached types
+		 *
+		 * @var string[]|false $get_allowed_types */
 		$get_allowed_types = wp_cache_get( 'smoc_get_allowed_types' );
 
 		if ( false !== $get_allowed_types ) {
@@ -357,6 +361,10 @@ final class SimpleMenuOrderColumn {
 
 		$get_allowed_types = array();
 
+		/**
+		 * Database types
+		 *
+		 * @var string|string[] $allowed_types */
 		$allowed_types = get_option( self::SMOC_OPTION_ALLOWED_TYPES );
 
 		if ( empty( $allowed_types ) ) {
@@ -464,7 +472,9 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	private static function output_menu_order_column( int $post_id, int $post_menu_order ) {
-		/** Plugins should not change the nonce so make it static for all boxes */
+		/** Plugins should not change the nonce so make it static for all boxes
+		 *
+		 * @var string $wp_nonce */
 		static $wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
 		/** All output is XSS secure, $wp_nonce is escaped */
 		print '<div class="smoc-container">';
