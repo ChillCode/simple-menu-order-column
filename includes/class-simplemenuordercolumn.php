@@ -241,7 +241,7 @@ final class SimpleMenuOrderColumn {
 	}
 
 	/**
-	 * Generate html checkbox to disable UI confirmation.
+	 * Generate html textbox to disable UI confirmation.
 	 *
 	 * @param array $options Option name.
 	 *
@@ -276,6 +276,7 @@ final class SimpleMenuOrderColumn {
 		}
 
 		add_filter( 'manage_' . $current_screen->id . '_columns', array( __CLASS__, 'manage_edit_columns' ) );
+		add_filter( 'manage_' . $current_screen->id . '_posts_columns', array( __CLASS__, 'manage_edit_columns' ) );
 		add_filter( 'manage_' . $current_screen->id . '_sortable_columns', array( __CLASS__, 'manage_edit_sortable_columns' ) );
 
 		if ( 'upload' === $current_screen->base ) {

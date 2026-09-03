@@ -2,9 +2,9 @@
 Contributors: Chillcode
 Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -56,8 +56,9 @@ That's it! You've successfully installed and activated **Simple Menu Order Colum
 
 Once installed you will see an input box on every listing item.
 
-To disable confirm prompt after menu order is updated visit **Wordpres Settings->Writing** and untick the option **Enable confirmation on input exit**
-To disable tab to next on position update visit **Wordpress Settings->Writing** and untick the option Enable **Go to next field on update**
+* To disable confirm prompt after menu order is updated visit **Wordpres Settings->Writing** and untick the option **Enable confirmation on input exit**
+* To disable tab to next on position update visit **Wordpress Settings->Writing** and untick the option Enable **Go to next field on update**
+* To disable or enable post types visit **Wordpress Settings->Writing** and add or remove valid post types separated using commas in **WP_Post types allowed** input text box.
 
 == Usage ==
 
@@ -68,14 +69,18 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
 == Changelog ==
+= 2.1.3 2026-08-13 =
 
-### 2.1.2 2025-06-23
+* Check WP 7.1 compatibility
+* Cache allowed typesto improve performance
+
+= 2.1.2 2026-06-23 =
 
 * Add domain translations
 * Fix: Prevent empty types
 * Use correct domain
 
-### 2.1.1 2025-06-19
+= 2.1.1 2026-06-19 =
 
 * Allow to modify allowed WP_Post types to show menu_order column on
 * Check WP 7.0 compatibility
@@ -85,26 +90,30 @@ To disable tab to next on position update visit **Wordpress Settings->Writing** 
 * Allow to disable confirm window
 * Allow to disable tab to next input field when data is updated
 
+= 2.0.0 =
+* Vanilla Javascript, no jQuery.
+* Minor PHPDoc fixes.
+* Minor code fixes.
+
+= 1.0.2 =
+* Minor code changes.
+* Localize Javascript.
+
+= 1.0.1 =
+* Fix false positive with Woo HPOS.
 == Upgrade Notice ==
+
+= 2.1.3 =
+
+* Check WP 7.1 compatibility
 
 = 2.1.2 =
 
+* Use correct domain
 * Add domain translations
 * Fix: Prevent empty types
 
 Improve UI functionality
-
-= 2.0.0 =
-Vanilla Javascript, no jQuery.
-Minor PHPDoc fixes.
-Minor code fixes.
-
-= 1.0.2 =
-Minor code changes.
-Localize Javascript.
-
-= 1.0.1 =
-Fix false positive with Woo HPOS.
 
 == Screenshots ==
 

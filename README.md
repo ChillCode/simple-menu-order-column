@@ -48,6 +48,10 @@ That's it! You've successfully installed and activated **Simple Menu Order Colum
 
 Once installed you will see an input box on every listing item.
 
+* To disable confirm prompt after menu order is updated visit **Wordpres Settings->Writing** and untick the option **Enable confirmation on input exit**
+* To disable tab to next on position update visit **Wordpress Settings->Writing** and untick the option Enable **Go to next field on update**
+* To disable or enable post types visit **Wordpress Settings->Writing** and add or remove valid post types separated using commas in **WP_Post types allowed** input text box.
+
 ## Usage
 
 1. **Access WordPress Admin**: Log in to your **WordPress** admin dashboard. This is usually accessed by adding "/wp-admin" to the end of your website's URL and entering your credentials.
@@ -57,13 +61,18 @@ Once installed you will see an input box on every listing item.
 * If Order column is not present [Manage screen options](https://wordpress.org/documentation/article/administration-screens/#screen-options/) and enable Order Column.
 
 ### Changelog
-### 2.1.2 2025-06-23
+### 2.1.3 2026-08-13
+
+* Check WP 7.1 compatibility
+* Cache allowed types to improve performance
+
+### 2.1.2 2026-06-23
 
 * Add domain translations
 * Fix: Prevent empty types
 * Use correct domain
 
-### 2.1.1 2025-06-19
+### 2.1.1 2026-06-19
 
 * Allow to modify allowed WP_Post types to show menu_order column on
 * Check WP 7.0 compatibility
@@ -88,9 +97,17 @@ Once installed you will see an input box on every listing item.
 
 ## Upgrade Notice
 
-### 2.1.2 2025-06-20
+### 2.1.3 2026-08-13
+
+* Check WP 7.1 compatibility
+
+### 2.1.2 2026-06-20
 
 * Use correct domain
+* Add domain translations
+* Fix: Prevent empty types
+
+Improve UI functionality
 
 ## Screenshots
 

@@ -1,42 +1,6 @@
 == Changelog ==
 
-### 2.1.2 2025-06-23
+### 2.1.3 2026-08-13
 
-* Add domain translations
-* Fix: Prevent empty types
-* Use correct domain
-
-### 2.1.1 2025-06-19
-
-* Allow to modify allowed WP_Post types to show menu_order column on
-* Check WP 7.0 compatibility
-
-= 2.1.0 2025-12-10 =
-
-* Allow to disable confirm window
-* Allow to disable tab to next input field when data is updated
-* Minor code changes
-
-= 2.0.1 2025-12-01 =
-
-* Allow negative values
-
-= 2.0.0 2025-07-02 =
-
-* Vanilla Javascript, jQuery requeriment removed.
-* Minor PHPDoc fixes.
-* Minor code fixes.
-
-= 1.0.2 2024-12-16 =
-
-* Update - Minor code changes.
-* Fix - Localize Javascript.
-* Add - Added products listing screenshot.
-
-= 1.0.1 2024-07-19 =
-
-**Simple Menu Order Column**
-
-* Add - Added license.txt and LICENSE.md.
-* Fix - Remove WC referenes from tags. [#1](https://github.com/ChillCode/simple-menu-order-column/issues/1)
-* Update - Added changelog.txt.
+* Check WP 7.1 compatibility
+* Improve performance
