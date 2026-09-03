@@ -16,7 +16,6 @@ use WP_Error;
  */
 final class SimpleMenuOrderColumn {
 
-
 	/**
 	 * The single instance of the class.
 	 *
@@ -27,11 +26,9 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Allowed types.
 	 *
-	 * We allow all WP_Post since has menu_order column and are sortable.
-	 *
 	 * @var array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
 	 */
-	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment' );
+	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment', 'shop_coupon' );
 
 	public const SMOC_OPTION_ALLOWED_TYPES  = 'smoc_ui_allowed_types';
 	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';

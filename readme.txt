@@ -75,6 +75,7 @@ Once installed you will see an input box on every listing item.
 * Cache allowed types to improve performance
 * Make input nonce static
 * Allow to add all WP_Post types
+* Remove load_textdomain
 
 == Upgrade Notice ==
 
