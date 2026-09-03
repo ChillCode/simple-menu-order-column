@@ -464,8 +464,10 @@ final class SimpleMenuOrderColumn {
 		 * NOTE: Is better to use woocommerce_wp_text_input method but to keep the plugin Woo free we create it here.
 		 */
 		// Even all output is XSS secure to prevent bot complaining we cast variables again.
+		static $wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
+
 		print '<div class="smoc-container">';
-		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . esc_attr( wp_create_nonce( 'set-post-menu-order' ) ) . '" data-post-id="' . (int) $post_id . '" />';
+		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />';
 		print '</div>';
 	}
 
