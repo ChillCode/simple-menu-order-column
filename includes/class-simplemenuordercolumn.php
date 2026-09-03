@@ -66,21 +66,8 @@ final class SimpleMenuOrderColumn {
 			return;
 		}
 
-		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'current_screen', array( $this, 'current_screen' ) );
-	}
-
-	/**
-	 * Initialize plugin.
-	 *
-	 * @return void
-	 */
-	public function init() {
-		if ( function_exists( 'load_plugin_textdomain' ) ) {
-			load_plugin_textdomain( 'simple-menu-order-column', false, dirname( plugin_basename( SMOC_PLUGIN_FILE ) ) . '/i18n/languages/' );
-		}
-
 		add_action( 'admin_init', array( $this, 'add_setting' ) );
+		add_action( 'current_screen', array( $this, 'current_screen' ) );
 	}
 
 	/**
