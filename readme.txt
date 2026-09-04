@@ -108,4 +108,3 @@ Can work with any WP_Post type but may require some additional coding.
 1. Uninstall **Simple Menu Order Column** to erase all data. WP_Post menu_order column will not be modified.
 
 [Manage plugins](https://wordpress.org/documentation/article/manage-plugins/)
-
