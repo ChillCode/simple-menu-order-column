@@ -1,13 +1,10 @@
-## 2.1.4 2026-09-04 ##
+## 2.1.3 2026-09-04 ##
 
 * Cache allowed types to improve performance
 * Make input nonce static
 * Allow to add all WP_Post types
-
-## 2.1.3 2026-08-13 ##
-
+* Remove load_textdomain
 * Check WP 7.1 compatibility
-* Cache allowed typesto improve performance
 
 ## 2.1.2 2026-06-23 ##
 

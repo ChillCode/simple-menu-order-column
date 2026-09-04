@@ -62,16 +62,17 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
-### 2.1.4 2026-09-04
+### 2.1.3 2026-09-04
 
 * Cache allowed types to improve performance
 * Make input nonce static
 * Allow to add all WP_Post types
 * Remove load_textdomain
+* Check WP 7.1 compatibility
 
 ## Upgrade Notice
 
-### 2.1.4 2026-09-04
+### 2.1.3 2026-09-04
 
 * Improved performance by caching allowed post types and the input nonce.
 * Add additional WP_Post types, such as shop_coupon, through writing settings.
