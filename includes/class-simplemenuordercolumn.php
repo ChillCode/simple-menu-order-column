@@ -28,7 +28,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @var array{0: 'post', 1: 'page', 2: 'product', 3: 'attachment'}
 	 */
-	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment', 'shop_coupon' );
+	private static $smoc_allowed_types = array( 'post', 'page', 'product', 'attachment' );
 
 	public const SMOC_OPTION_ALLOWED_TYPES  = 'smoc_ui_allowed_types';
 	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';
@@ -524,17 +524,12 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Delete options.
 	 *
-	 * @return int|bool
+	 * @return void
 	 */
 	public static function delete_options() {
-		global $wpdb;
-		/**
-		 * WP_Query
-		 *
-		 * @var \wpdb $wpdb
-		 */
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
-		return $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'smoc_%'" );
+		delete_option( 'smoc_ui_allowed_types' );
+		delete_option( 'smoc_ui_confirmation' );
+		delete_option( 'smoc_ui_tab_to_next' );
 	}
 
 	/**
