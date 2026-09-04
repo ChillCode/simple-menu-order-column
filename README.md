@@ -83,6 +83,7 @@ Once installed you will see an input box on every listing item.
 2. Pages.
 3. Media.
 4. Products.
+5. Settings.
 
 ## Frequently Asked Questions
 
