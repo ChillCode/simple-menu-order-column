@@ -460,7 +460,11 @@ final class SimpleMenuOrderColumn {
 		 * Make nonce static for al input boxes.
 		 *
 		 * @var string $wp_nonce */
-		static $wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
+		static $wp_nonce = null;
+
+		if ( null === $wp_nonce ) {
+		    $wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
+		}
 
 		print '<div class="smoc-container">';
 		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -527,9 +531,9 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public static function delete_options() {
-		delete_option( 'smoc_ui_allowed_types' );
-		delete_option( 'smoc_ui_confirmation' );
-		delete_option( 'smoc_ui_tab_to_next' );
+		delete_option( self::SMOC_OPTION_ALLOWED_TYPES );
+		delete_option( self::SMOC_OPTION_UI_CONFIRM );
+		delete_option( self::SMOC_OPTION_UI_TAB_TO_NEXT );
 	}
 
 	/**
