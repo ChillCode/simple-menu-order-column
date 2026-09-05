@@ -66,14 +66,6 @@ Once installed you will see an input box on every listing item.
 
 * Fixed PHP 7.4 compatibility.
 
-### 2.1.3 2026-09-04
-
-* Cache allowed types to improve performance
-* Make input nonce static
-* Allow to add all WP_Post types
-* Remove load_textdomain
-* Check WP 7.1 compatibility
-
 ## Upgrade Notice
 
 ### 2.1.4 2026-09-05
