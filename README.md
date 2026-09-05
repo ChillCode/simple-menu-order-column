@@ -62,6 +62,9 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
+= 2.1.4 2026-09-05 =
+
+* Fixed PHP 7.4 compatibility.
 ### 2.1.3 2026-09-04
 
 * Cache allowed types to improve performance

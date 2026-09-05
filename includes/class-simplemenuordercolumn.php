@@ -459,11 +459,11 @@ final class SimpleMenuOrderColumn {
 		/**
 		 * Make nonce static for al input boxes.
 		 *
-		 * @var string $wp_nonce */
+		 * @var string|null $wp_nonce */
 		static $wp_nonce = null;
 
 		if ( null === $wp_nonce ) {
-		    $wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
+			$wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
 		}
 
 		print '<div class="smoc-container">';

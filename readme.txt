@@ -4,7 +4,7 @@ Tags: menu order, pages, media, posts, products
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -70,19 +70,24 @@ Once installed you will see an input box on every listing item.
 
 == Changelog ==
 
+= 2.1.4 2026-09-05 =
+
+* Fixed PHP 7.4 compatibility.
+
 = 2.1.3 2026-09-04 =
 
 * Cache allowed types to improve performance
 * Make input nonce static
 * Allow to add all WP_Post types
 * Remove load_textdomain
+* Check WP 7.1 compatibility
+
 
 == Upgrade Notice ==
 
-= 2.1.3 2026-09-04 =
+= 2.1.4 2026-09-05 =
 
-* Improved performance by caching allowed post types and the input nonce.
-* Add additional WP_Post types, such as shop_coupon, through writing settings.
+* Fixed PHP 7.4 compatibility.
 
 Improve UI functionality
 
