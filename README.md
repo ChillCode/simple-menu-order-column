@@ -62,9 +62,10 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
-= 2.1.4 2026-09-05 =
+### 2.1.4 2026-09-05
 
 * Fixed PHP 7.4 compatibility.
+
 ### 2.1.3 2026-09-04
 
 * Cache allowed types to improve performance
@@ -75,10 +76,9 @@ Once installed you will see an input box on every listing item.
 
 ## Upgrade Notice
 
-### 2.1.3 2026-09-04
+### 2.1.4 2026-09-05
 
-* Improved performance by caching allowed post types and the input nonce.
-* Add additional WP_Post types, such as shop_coupon, through writing settings.
+* Fixed PHP 7.4 compatibility.
 
 ## Screenshots
 
