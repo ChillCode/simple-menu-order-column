@@ -37,7 +37,7 @@ final class SimpleMenuOrderColumn {
 	/**
 	 * Construtor.
 	 */
-	public function __construct() {
+	private function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 	}
 
