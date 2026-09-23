@@ -2,9 +2,9 @@ name: PHP CS Fixer
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "development" ]
 
 jobs:
   php-cs-fixer:
