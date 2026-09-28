@@ -62,14 +62,14 @@ Once installed you will see an input box on every listing item.
 
 ### Changelog
 
-### 2.1.4 2026-09-05
+### 2.1.4 2026-09-28
 
 * Fixed PHP 7.4 compatibility.
 * Increase input width and adjunst padding.
 
 ## Upgrade Notice
 
-### 2.1.4 2026-09-05
+### 2.1.4 2026-09-28
 
 * Fixed PHP 7.4 compatibility.
 
