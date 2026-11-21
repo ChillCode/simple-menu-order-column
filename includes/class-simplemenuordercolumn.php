@@ -38,7 +38,7 @@ final class SimpleMenuOrderColumn {
 	 * Construtor.
 	 */
 	private function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
 	}
 
 	/**
@@ -46,7 +46,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function plugins_loaded() {
+	public static function plugins_loaded() {
 		/** If we are not in admin pages nothing to do. */
 		if ( ! is_admin() ) {
 			return;
@@ -63,8 +63,8 @@ final class SimpleMenuOrderColumn {
 			return;
 		}
 
-		add_action( 'admin_init', array( $this, 'add_setting' ) );
-		add_action( 'current_screen', array( $this, 'current_screen' ) );
+		add_action( 'admin_init', array( __CLASS__, 'add_setting' ) );
+		add_action( 'current_screen', array( __CLASS__, 'current_screen' ) );
 	}
 
 	/**
@@ -72,7 +72,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function add_setting() {
+	public static function add_setting() {
 
 		add_settings_section(
 			'smoc_section',
@@ -244,7 +244,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function current_screen() {
+	public static function current_screen() {
 		/** Add only on listings pages and compatible post types. */
 		$current_screen = get_current_screen();
 
@@ -270,7 +270,7 @@ final class SimpleMenuOrderColumn {
 			add_action( 'manage_' . $current_screen->post_type . '_posts_custom_column', array( __CLASS__, 'manage_posts_custom_column' ), 10, 2 );
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 	}
 
 	/**
@@ -278,7 +278,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function admin_enqueue_scripts() {
+	public static function admin_enqueue_scripts() {
 		$wp_scripts_get_suffix = wp_scripts_get_suffix();
 
 		wp_enqueue_script(
