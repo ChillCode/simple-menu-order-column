@@ -537,22 +537,6 @@ final class SimpleMenuOrderColumn {
 	}
 
 	/**
-	 * Activate plugin, keep for meta update.
-	 *
-	 * @return void
-	 */
-	public static function activate() {
-	}
-
-	/**
-	 * Deactivate plugin.
-	 *
-	 * @return void
-	 */
-	public static function deactivate() {
-	}
-
-	/**
 	 * Uninstall plugin.
 	 *
 	 * @return void
@@ -561,16 +545,6 @@ final class SimpleMenuOrderColumn {
 		self::delete_options();
 	}
 }
-
-register_activation_hook(
-	SMOC_PLUGIN_FILE,
-	array( SimpleMenuOrderColumn::class, 'activate' )
-);
-
-register_deactivation_hook(
-	SMOC_PLUGIN_FILE,
-	array( SimpleMenuOrderColumn::class, 'deactivate' )
-);
 
 register_uninstall_hook(
 	SMOC_PLUGIN_FILE,
