@@ -239,11 +239,11 @@ final class SimpleMenuOrderColumn {
 				}
 
 				if ( null === get_post_type_object( $allowed_type ) ) {
-					/* translators: %s: The invalid post type slug entered by the user */
 					add_settings_error(
 						self::SMOC_OPTION_ALLOWED_TYPES,
 						'invalid_textbox_value',
 						sprintf(
+							/* translators: %s: The invalid post type slug entered by the user */
 							__(
 								'"%s" is not valid post type for this plugin.',
 								'simple-menu-order-column'
