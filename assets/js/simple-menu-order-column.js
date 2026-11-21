@@ -201,7 +201,7 @@
 					smocInput.title = menuOrder;
 					smocInput.currentValue = menuOrder;
 					smocInput.defaultValue = menuOrder;
-					if (smocConfig.tab_to_next) {
+					if (config.tabToNext) {
 						tabToNextInput(smocInput);
 					}
 				} else {
