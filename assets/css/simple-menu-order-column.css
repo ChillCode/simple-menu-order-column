@@ -32,6 +32,30 @@ table.wp-list-table .column-menu_order {
     }
 
     to {
-        transform: rotate(359deg);
+        transform: rotate(360deg);
     }
+}
+
+.smoc-loader-container {
+	display: inline-block;
+	padding-top: 5px;
+}
+
+.smoc-loader {
+	display: inline-block;
+	color: #2ea2cc;
+	animation: iconrotation 2s infinite linear;
+}
+
+.smoc-error, .smoc-success {
+	display: inline-block;
+	padding-top: 5px;
+}
+
+.smoc-error {
+	color: #a00;
+}
+
+.smoc-success {
+	color: #7ad03a;
 }
