@@ -718,8 +718,13 @@ final class SimpleMenuOrderColumn {
 			$wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
 		}
 
+		$disabled = ! current_user_can(
+			'edit_post',
+			$post_id
+		);
+
 		print '<div class="smoc-container">';
-		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		print '<input ' . disabled( $disabled, true, false ) . ' id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		print '</div>';
 	}
 
