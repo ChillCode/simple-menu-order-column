@@ -10,6 +10,7 @@
 namespace SMOC;
 
 use WP_Error;
+use WP_Query;
 
 /**
  * SimpleMenuOrderColumn class.
@@ -32,6 +33,7 @@ final class SimpleMenuOrderColumn {
 
 	public const SMOC_OPTION_ALLOWED_TYPES  = 'smoc_ui_allowed_types';
 	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';
+	public const SMOC_OPTION_UI_ORDERBY     = 'smoc_ui_orderby';
 	public const SMOC_OPTION_UI_TAB_TO_NEXT = 'smoc_ui_tab_to_next';
 
 	/**
@@ -206,6 +208,58 @@ final class SimpleMenuOrderColumn {
 				),
 			)
 		);
+
+		register_setting(
+			'writing',
+			self::SMOC_OPTION_UI_ORDERBY,
+			array(
+				'type'              => 'boolean',
+				'sanitize_callback' => array(
+					__CLASS__,
+					'input_sanitize_checkbox',
+				),
+				'default'           => true,
+			)
+		);
+
+		add_settings_field(
+			self::SMOC_OPTION_UI_ORDERBY,
+			__(
+				'Default order by column',
+				'simple-menu-order-column'
+			),
+			array(
+				__CLASS__,
+				'output_admin_checkbox',
+			),
+			'writing',
+			'smoc_section',
+			array(
+				'option_name' => self::SMOC_OPTION_UI_ORDERBY,
+				'option_desc' => esc_attr__(
+					'If enabled, allowed types will be sorted by menu order by default.',
+					'simple-menu-order-column'
+				),
+			)
+		);
+	}
+
+	/**
+	 * Set default menu_order sorting.
+	 *
+	 * @param WP_Query $query Main query instance.
+	 * @return void
+	 */
+	public static function pre_get_posts( $query ) {
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+
+		$query->set( 'orderby', 'menu_order' );
+		$query->set( 'order', 'ASC' );
+
+		$_GET['orderby'] = 'menu_order';
+		$_GET['order']   = 'asc';
 	}
 
 	/**
@@ -357,6 +411,34 @@ final class SimpleMenuOrderColumn {
 			)
 		) {
 			return;
+		}
+
+		$orderby_menu_order = filter_var(
+			get_option(
+				self::SMOC_OPTION_UI_ORDERBY,
+				false
+			),
+			FILTER_VALIDATE_BOOLEAN,
+			array( 'default' => false )
+		);
+
+		if ( $orderby_menu_order ) {
+			$orderby = filter_input(
+				INPUT_GET,
+				'orderby',
+				FILTER_SANITIZE_FULL_SPECIAL_CHARS
+			);
+
+			if ( empty( $orderby ) ) {
+				add_action(
+					'pre_get_posts',
+					array(
+						__CLASS__,
+						'pre_get_posts',
+					),
+					999
+				);
+			}
 		}
 
 		add_filter(
@@ -710,6 +792,7 @@ final class SimpleMenuOrderColumn {
 	public static function delete_options() {
 		delete_option( self::SMOC_OPTION_ALLOWED_TYPES );
 		delete_option( self::SMOC_OPTION_UI_CONFIRM );
+		delete_option( self::SMOC_OPTION_UI_ORDERBY );
 		delete_option( self::SMOC_OPTION_UI_TAB_TO_NEXT );
 	}
 
