@@ -10,9 +10,10 @@
 namespace SMOC;
 
 use WP_Error;
+use WP_Query;
 
 /**
- * SMOCWC class.
+ * SimpleMenuOrderColumn class.
  */
 final class SimpleMenuOrderColumn {
 
@@ -32,13 +33,20 @@ final class SimpleMenuOrderColumn {
 
 	public const SMOC_OPTION_ALLOWED_TYPES  = 'smoc_ui_allowed_types';
 	public const SMOC_OPTION_UI_CONFIRM     = 'smoc_ui_confirmation';
+	public const SMOC_OPTION_UI_ORDERBY     = 'smoc_ui_orderby';
 	public const SMOC_OPTION_UI_TAB_TO_NEXT = 'smoc_ui_tab_to_next';
 
 	/**
 	 * Construtor.
 	 */
 	private function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		add_action(
+			'plugins_loaded',
+			array(
+				__CLASS__,
+				'plugins_loaded',
+			)
+		);
 	}
 
 	/**
@@ -46,7 +54,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function plugins_loaded() {
+	public static function plugins_loaded() {
 		/** If we are not in admin pages nothing to do. */
 		if ( ! is_admin() ) {
 			return;
@@ -58,13 +66,32 @@ final class SimpleMenuOrderColumn {
 		 *  Same as usig $GLOBAL['pagenow'] === 'admin-ajax.php
 		 */
 		if ( wp_doing_ajax() ) {
-			add_action( 'wp_ajax_smoc_reorder', array( __CLASS__, 'ajax_set_post_menu_order' ) );
+			add_action(
+				'wp_ajax_smoc_reorder',
+				array(
+					__CLASS__,
+					'ajax_set_post_menu_order',
+				)
+			);
 
 			return;
 		}
 
-		add_action( 'admin_init', array( $this, 'add_setting' ) );
-		add_action( 'current_screen', array( $this, 'current_screen' ) );
+		add_action(
+			'admin_init',
+			array(
+				__CLASS__,
+				'add_setting',
+			)
+		);
+
+		add_action(
+			'current_screen',
+			array(
+				__CLASS__,
+				'current_screen',
+			)
+		);
 	}
 
 	/**
@@ -72,12 +99,15 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function add_setting() {
+	public static function add_setting() {
 
 		add_settings_section(
 			'smoc_section',
 			'Simple Menu Order Column',
-			array( __CLASS__, 'output_section_description' ),
+			array(
+				__CLASS__,
+				'output_section_description',
+			),
 			'writing'
 		);
 
@@ -86,15 +116,24 @@ final class SimpleMenuOrderColumn {
 			self::SMOC_OPTION_ALLOWED_TYPES,
 			array(
 				'type'              => 'string',
-				'sanitize_callback' => array( __CLASS__, 'input_sanitize_textbox' ),
+				'sanitize_callback' => array(
+					__CLASS__,
+					'input_sanitize_textbox',
+				),
 				'default'           => self::get_default_allowed_types(),
 			)
 		);
 
 		add_settings_field(
 			self::SMOC_OPTION_ALLOWED_TYPES,
-			__( 'WP_Post types allowed', 'simple-menu-order-column' ),
-			array( __CLASS__, 'output_admin_textbox' ),
+			__(
+				'WP_Post types allowed',
+				'simple-menu-order-column'
+			),
+			array(
+				__CLASS__,
+				'output_admin_textbox',
+			),
 			'writing',
 			'smoc_section',
 			array(
@@ -107,20 +146,32 @@ final class SimpleMenuOrderColumn {
 			self::SMOC_OPTION_UI_CONFIRM,
 			array(
 				'type'              => 'boolean',
-				'sanitize_callback' => array( __CLASS__, 'input_sanitize_checkbox' ),
+				'sanitize_callback' => array(
+					__CLASS__,
+					'input_sanitize_checkbox',
+				),
 				'default'           => true,
 			)
 		);
 
 		add_settings_field(
 			self::SMOC_OPTION_UI_CONFIRM,
-			__( 'Show confirmation prompt', 'simple-menu-order-column' ),
-			array( __CLASS__, 'output_admin_checkbox' ),
+			__(
+				'Show confirmation prompt',
+				'simple-menu-order-column'
+			),
+			array(
+				__CLASS__,
+				'output_admin_checkbox',
+			),
 			'writing',
 			'smoc_section',
 			array(
 				'option_name' => self::SMOC_OPTION_UI_CONFIRM,
-				'option_desc' => esc_attr__( 'If disabled, the value will be updated automatically without prompting.', 'simple-menu-order-column' ),
+				'option_desc' => esc_attr__(
+					'If disabled, the value will be updated automatically without prompting.',
+					'simple-menu-order-column'
+				),
 			)
 		);
 
@@ -129,22 +180,86 @@ final class SimpleMenuOrderColumn {
 			self::SMOC_OPTION_UI_TAB_TO_NEXT,
 			array(
 				'type'              => 'boolean',
-				'sanitize_callback' => array( __CLASS__, 'input_sanitize_checkbox' ),
+				'sanitize_callback' => array(
+					__CLASS__,
+					'input_sanitize_checkbox',
+				),
 				'default'           => true,
 			)
 		);
 
 		add_settings_field(
 			self::SMOC_OPTION_UI_TAB_TO_NEXT,
-			__( 'Go to next field on update', 'simple-menu-order-column' ),
-			array( __CLASS__, 'output_admin_checkbox' ),
+			__(
+				'Go to next field on update',
+				'simple-menu-order-column'
+			),
+			array(
+				__CLASS__,
+				'output_admin_checkbox',
+			),
 			'writing',
 			'smoc_section',
 			array(
 				'option_name' => self::SMOC_OPTION_UI_TAB_TO_NEXT,
-				'option_desc' => esc_attr__( 'If disabled, the cursor will remain in the input field after menu order is updated.', 'simple-menu-order-column' ),
+				'option_desc' => esc_attr__(
+					'If disabled, the cursor will remain in the input field after menu order is updated.',
+					'simple-menu-order-column'
+				),
 			)
 		);
+
+		register_setting(
+			'writing',
+			self::SMOC_OPTION_UI_ORDERBY,
+			array(
+				'type'              => 'boolean',
+				'sanitize_callback' => array(
+					__CLASS__,
+					'input_sanitize_checkbox',
+				),
+				'default'           => true,
+			)
+		);
+
+		add_settings_field(
+			self::SMOC_OPTION_UI_ORDERBY,
+			__(
+				'Default order by column',
+				'simple-menu-order-column'
+			),
+			array(
+				__CLASS__,
+				'output_admin_checkbox',
+			),
+			'writing',
+			'smoc_section',
+			array(
+				'option_name' => self::SMOC_OPTION_UI_ORDERBY,
+				'option_desc' => esc_attr__(
+					'If enabled, allowed types will be sorted by menu order by default.',
+					'simple-menu-order-column'
+				),
+			)
+		);
+	}
+
+	/**
+	 * Set default menu_order sorting.
+	 *
+	 * @param WP_Query $query Main query instance.
+	 * @return void
+	 */
+	public static function pre_get_posts( $query ) {
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+
+		$query->set( 'orderby', 'menu_order' );
+		$query->set( 'order', 'ASC' );
+
+		$_GET['orderby'] = 'menu_order';
+		$_GET['order']   = 'asc';
 	}
 
 	/**
@@ -155,7 +270,6 @@ final class SimpleMenuOrderColumn {
 	 * @return int
 	 */
 	public static function input_sanitize_checkbox( $value ) {
-
 		return $value ? 1 : 0;
 	}
 
@@ -179,8 +293,19 @@ final class SimpleMenuOrderColumn {
 				}
 
 				if ( null === get_post_type_object( $allowed_type ) ) {
-					/* translators: %s: The invalid post type slug entered by the user */
-					add_settings_error( self::SMOC_OPTION_ALLOWED_TYPES, 'invalid_textbox_value', sprintf( __( '"%s" is not valid post type for this plugin.', 'simple-menu-order-column' ), esc_html( $allowed_type ) ), 'error' );
+					add_settings_error(
+						self::SMOC_OPTION_ALLOWED_TYPES,
+						'invalid_textbox_value',
+						sprintf(
+							/* translators: %s: The invalid post type slug entered by the user */
+							__(
+								'"%s" is not valid post type for this plugin.',
+								'simple-menu-order-column'
+							),
+							esc_html( $allowed_type )
+						),
+						'error'
+					);
 
 					continue;
 				}
@@ -189,11 +314,17 @@ final class SimpleMenuOrderColumn {
 			}
 
 			if ( ! empty( $allowed_types_ary ) ) {
-				return implode( ',', array_unique( $allowed_types_ary ) );
+				return implode(
+					',',
+					array_unique( $allowed_types_ary )
+				);
 			}
 		}
 
-		return implode( ',', self::get_default_allowed_types() );
+		return implode(
+			',',
+			self::get_default_allowed_types()
+		);
 	}
 
 	/**
@@ -216,7 +347,16 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public static function output_admin_checkbox( array $options ) {
-		$checked = filter_var( get_option( $options['option_name'], true ), FILTER_VALIDATE_BOOLEAN, array( 'default' => true ) );
+		$checked = filter_var(
+			get_option(
+				$options['option_name'],
+				true
+			),
+			FILTER_VALIDATE_BOOLEAN,
+			array(
+				'default' => true,
+			)
+		);
 
 		print '<label>';
 		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="checkbox" ' . checked( $checked, true, false ) . ' class="smoc-input" value="1" />';
@@ -232,7 +372,10 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public static function output_admin_textbox( array $options ) {
-		$allowed_types = implode( ',', self::get_allowed_types() );
+		$allowed_types = implode(
+			',',
+			self::get_allowed_types()
+		);
 
 		print '<label>';
 		print '<input name="' . esc_attr( $options['option_name'] ) . '" type="text" class="regular-text ltr" value="' . esc_attr( $allowed_types ) . '" />';
@@ -244,7 +387,7 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function current_screen() {
+	public static function current_screen() {
 		/** Add only on listings pages and compatible post types. */
 		$current_screen = get_current_screen();
 
@@ -253,24 +396,105 @@ final class SimpleMenuOrderColumn {
 		}
 
 		if (
-			! in_array( $current_screen->base, array( 'edit', 'upload' ), true ) ||
-			! in_array( $current_screen->post_type, self::get_allowed_types(), true )
+			! in_array(
+				$current_screen->base,
+				array(
+					'edit',
+					'upload',
+				),
+				true
+			) ||
+			! in_array(
+				$current_screen->post_type,
+				self::get_allowed_types(),
+				true
+			)
 		) {
 			return;
 		}
 
-		add_filter( 'manage_' . $current_screen->id . '_columns', array( __CLASS__, 'manage_edit_columns' ) );
-		add_filter( 'manage_' . $current_screen->id . '_posts_columns', array( __CLASS__, 'manage_edit_columns' ) );
-		add_filter( 'manage_' . $current_screen->id . '_sortable_columns', array( __CLASS__, 'manage_edit_sortable_columns' ) );
+		$orderby_menu_order = filter_var(
+			get_option(
+				self::SMOC_OPTION_UI_ORDERBY,
+				false
+			),
+			FILTER_VALIDATE_BOOLEAN,
+			array( 'default' => false )
+		);
+
+		if ( $orderby_menu_order ) {
+			$orderby = filter_input(
+				INPUT_GET,
+				'orderby',
+				FILTER_SANITIZE_FULL_SPECIAL_CHARS
+			);
+
+			if ( empty( $orderby ) ) {
+				add_action(
+					'pre_get_posts',
+					array(
+						__CLASS__,
+						'pre_get_posts',
+					),
+					999
+				);
+			}
+		}
+
+		add_filter(
+			'manage_' . $current_screen->id . '_columns',
+			array(
+				__CLASS__,
+				'manage_edit_columns',
+			)
+		);
+
+		add_filter(
+			'manage_' . $current_screen->id . '_posts_columns',
+			array(
+				__CLASS__,
+				'manage_edit_columns',
+			)
+		);
+
+		add_filter(
+			'manage_' . $current_screen->id . '_sortable_columns',
+			array(
+				__CLASS__,
+				'manage_edit_sortable_columns',
+			)
+		);
 
 		if ( 'upload' === $current_screen->base ) {
 			/** This action is called directly. */
-			add_action( 'manage_media_custom_column', array( __CLASS__, 'manage_posts_custom_column' ), 10, 2 );
+			add_action(
+				'manage_media_custom_column',
+				array(
+					__CLASS__,
+					'manage_posts_custom_column',
+				),
+				10,
+				2
+			);
 		} else {
-			add_action( 'manage_' . $current_screen->post_type . '_posts_custom_column', array( __CLASS__, 'manage_posts_custom_column' ), 10, 2 );
+			add_action(
+				'manage_' . $current_screen->post_type . '_posts_custom_column',
+				array(
+					__CLASS__,
+					'manage_posts_custom_column',
+				),
+				10,
+				2
+			);
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		add_action(
+			'admin_enqueue_scripts',
+			array(
+				__CLASS__,
+				'admin_enqueue_scripts',
+			)
+		);
 	}
 
 	/**
@@ -278,12 +502,15 @@ final class SimpleMenuOrderColumn {
 	 *
 	 * @return void
 	 */
-	public function admin_enqueue_scripts() {
+	public static function admin_enqueue_scripts() {
 		$wp_scripts_get_suffix = wp_scripts_get_suffix();
 
 		wp_enqueue_script(
 			'simple-menu-order-column',
-			plugins_url( 'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js', SMOC_PLUGIN_FILE ),
+			plugins_url(
+				'assets/js/simple-menu-order-column' . $wp_scripts_get_suffix . '.js',
+				SMOC_PLUGIN_FILE
+			),
 			array( 'wp-i18n' ),
 			SMOC_PLUGIN_VERSION,
 			true
@@ -320,7 +547,10 @@ final class SimpleMenuOrderColumn {
 
 		wp_enqueue_style(
 			'simple-menu-order-column',
-			plugins_url( 'assets/css/simple-menu-order-column' . $wp_scripts_get_suffix . '.css', SMOC_PLUGIN_FILE ),
+			plugins_url(
+				'assets/css/simple-menu-order-column' . $wp_scripts_get_suffix . '.css',
+				SMOC_PLUGIN_FILE
+			),
 			array(),
 			SMOC_PLUGIN_VERSION
 		);
@@ -371,7 +601,10 @@ final class SimpleMenuOrderColumn {
 			return array();
 		}
 
-		wp_cache_set( 'smoc_get_allowed_types', $get_allowed_types );
+		wp_cache_set(
+			'smoc_get_allowed_types',
+			$get_allowed_types
+		);
 
 		return $get_allowed_types;
 	}
@@ -391,16 +624,29 @@ final class SimpleMenuOrderColumn {
 	 * @return void
 	 */
 	public static function ajax_set_post_menu_order() {
-		if ( false === check_ajax_referer( 'set-post-menu-order', '_wpnonce', false ) ) {
+		if ( false === check_ajax_referer(
+			'set-post-menu-order',
+			'_wpnonce',
+			false
+		) ) {
 			wp_send_json_error();
 		}
 
 		/**
 		 * Check post_type.
 		 */
-		$post_type = filter_input( INPUT_POST, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$post_type = filter_input(
+			INPUT_POST,
+			'post_type',
+			FILTER_SANITIZE_FULL_SPECIAL_CHARS
+		);
 
-		if ( ! $post_type || ! in_array( $post_type, self::get_allowed_types(), true ) ) {
+		if ( ! $post_type ||
+			! in_array(
+				$post_type,
+				self::get_allowed_types(),
+				true
+			) ) {
 			wp_send_json_error();
 		}
 
@@ -422,8 +668,14 @@ final class SimpleMenuOrderColumn {
 		if (
 			! is_integer( $post_id ) ||
 			! is_integer( $post_menu_order ) ||
-			! current_user_can( 'edit_post', $post_id ) ||
-			self::set_post_menu_order( $post_id, $post_menu_order ) instanceof WP_Error
+			! current_user_can(
+				'edit_post',
+				$post_id
+			) ||
+			self::set_post_menu_order(
+				$post_id,
+				$post_menu_order
+			) instanceof WP_Error
 		) {
 			wp_send_json_error();
 		}
@@ -466,8 +718,13 @@ final class SimpleMenuOrderColumn {
 			$wp_nonce = esc_attr( wp_create_nonce( 'set-post-menu-order' ) );
 		}
 
+		$disabled = ! current_user_can(
+			'edit_post',
+			$post_id
+		);
+
 		print '<div class="smoc-container">';
-		print '<input id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		print '<input ' . disabled( $disabled, true, false ) . ' id="smoc-' . (int) $post_id . '" type="text" class="smoc-input" value="' . (int) $post_menu_order . '" title="' . (int) $post_menu_order . '" data-wpnonce="' . $wp_nonce . '" data-post-id="' . (int) $post_id . '" />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		print '</div>';
 	}
 
@@ -486,7 +743,10 @@ final class SimpleMenuOrderColumn {
 				return;
 			}
 
-			self::output_menu_order_column( $postid, $post->menu_order );
+			self::output_menu_order_column(
+				$postid,
+				$post->menu_order
+			);
 		}
 	}
 
@@ -497,7 +757,11 @@ final class SimpleMenuOrderColumn {
 	 * @return string[]
 	 */
 	public static function manage_edit_columns( $columns ) {
-		$columns['menu_order'] = esc_html__( 'Order', 'simple-menu-order-column' );
+		$columns['menu_order'] = esc_html__(
+			'Order',
+			'simple-menu-order-column'
+		);
+
 		return $columns;
 	}
 
@@ -533,23 +797,8 @@ final class SimpleMenuOrderColumn {
 	public static function delete_options() {
 		delete_option( self::SMOC_OPTION_ALLOWED_TYPES );
 		delete_option( self::SMOC_OPTION_UI_CONFIRM );
+		delete_option( self::SMOC_OPTION_UI_ORDERBY );
 		delete_option( self::SMOC_OPTION_UI_TAB_TO_NEXT );
-	}
-
-	/**
-	 * Activate plugin, keep for meta update.
-	 *
-	 * @return void
-	 */
-	public static function activate() {
-	}
-
-	/**
-	 * Deactivate plugin.
-	 *
-	 * @return void
-	 */
-	public static function deactivate() {
 	}
 
 	/**
@@ -562,17 +811,10 @@ final class SimpleMenuOrderColumn {
 	}
 }
 
-register_activation_hook(
-	SMOC_PLUGIN_FILE,
-	array( SimpleMenuOrderColumn::class, 'activate' )
-);
-
-register_deactivation_hook(
-	SMOC_PLUGIN_FILE,
-	array( SimpleMenuOrderColumn::class, 'deactivate' )
-);
-
 register_uninstall_hook(
 	SMOC_PLUGIN_FILE,
-	array( SimpleMenuOrderColumn::class, 'uninstall' )
+	array(
+		SimpleMenuOrderColumn::class,
+		'uninstall',
+	)
 );

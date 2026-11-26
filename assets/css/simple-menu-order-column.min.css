@@ -6,4 +6,4 @@
  * Copyright (C) 2024 ChillCode
  *
  * @license Released under the General Public License v3.0 https://www.gnu.org/licenses/gpl-3.0.html
- */table.wp-list-table .column-menu_order{width:100px;text-align:left!important}.smoc-input{max-width:60px;padding:0 6px!important}.smoc-container{display:inline-flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;gap:4px}@keyframes iconrotation{from{transform:rotate(0)}to{transform:rotate(359deg)}}
+ */table.wp-list-table .column-menu_order{width:100px;text-align:left!important}.smoc-input{max-width:60px;padding:0 6px!important}.smoc-container{display:inline-flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;gap:4px}@keyframes iconrotation{from{transform:rotate(0)}to{transform:rotate(360deg)}}.smoc-loader-container{display:inline-block;padding-top:5px}.smoc-loader{display:inline-block;color:#2ea2cc;animation:iconrotation 2s infinite linear}.smoc-error,.smoc-success{display:inline-block;padding-top:5px}.smoc-error{color:#a00}.smoc-success{color:#7ad03a}

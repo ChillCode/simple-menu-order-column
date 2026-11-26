@@ -134,11 +134,9 @@
 				smocLoader.className = 'smoc-loader dashicons dashicons-update';
 				smocLoader.setAttribute('role', 'img');
 				smocLoader.setAttribute('aria-label', __('Updating menu order...', 'simple-menu-order-column'));
-				smocLoader.style.cssText = 'color: #2ea2cc; animation: iconrotation 2s infinite linear; display: inline-block;';
 
 				smocLoaderContainer = document.createElement('div');
 				smocLoaderContainer.id = `${loaderId}-loader-container`;
-				smocLoaderContainer.style.cssText = 'padding-top: 5px; display: inline-block;';
 				smocLoaderContainer.appendChild(smocLoader);
 				smocContainer.appendChild(smocLoaderContainer);
 			} else {
@@ -154,7 +152,6 @@
 				smocSuccess.className = 'smoc-success dashicons dashicons-yes-alt';
 				smocSuccess.setAttribute('role', 'img');
 				smocSuccess.setAttribute('aria-label', __('The menu order has been updated successfully.', 'simple-menu-order-column'));
-				smocSuccess.style.cssText = 'padding-top: 5px; color: #7ad03a; display: inline-block;';
 				smocContainer.appendChild(smocSuccess);
 			} else {
 				smocSuccess.style.display = 'inline-block';
@@ -169,7 +166,6 @@
 				smocError.className = 'smoc-error dashicons dashicons-dismiss';
 				smocError.setAttribute('role', 'img');
 				smocError.setAttribute('aria-label', __('An error ocurred while updating menu order.', 'simple-menu-order-column'));
-				smocError.style.cssText = 'padding-top: 5px; color: #a00; display: inline-block;';
 				smocContainer.appendChild(smocError);
 			} else {
 				smocError.style.display = 'inline-block';
@@ -201,7 +197,7 @@
 					smocInput.title = menuOrder;
 					smocInput.currentValue = menuOrder;
 					smocInput.defaultValue = menuOrder;
-					if (smocConfig.tab_to_next) {
+					if (config.tabToNext) {
 						tabToNextInput(smocInput);
 					}
 				} else {
